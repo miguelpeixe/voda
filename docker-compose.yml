@@ -28,4 +28,5 @@ app:
     NODE_ENV: development
   volumes:
     - /home/node/app/node_modules
+    - /home/node/app/bower_components
     - .:/home/node/app

@@ -23,9 +23,10 @@ WORKDIR $HOME/app
 COPY . $HOME/app/
 
 # Install global npm dependencies and app
-RUN npm install -g nodemon && \
+RUN npm install -g nodemon bower && \
   chown -R $APP_USER:$APP_USER $HOME/app && \
-  gosu $APP_USER:$APP_USER npm install
+  gosu $APP_USER:$APP_USER npm install && \
+  gosu $APP_USER:$APP_USER bower install -F
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh

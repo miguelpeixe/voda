@@ -8,6 +8,23 @@ module.exports = function (app) {
     text: {
       type: Sequelize.STRING,
       allowNull: false
+    },
+    description: {
+      type: Sequelize.TEXT
+    },
+    privacy: {
+      type: Sequelize.ENUM(
+        'public',
+        'private'
+      )
+    },
+    status: {
+      type: Sequelize.ENUM(
+        'waiting',
+        'uploading',
+        'uploaded'
+      ),
+      defaultValue: 'waiting'
     }
   }, {
     classMethods: {

@@ -21,6 +21,12 @@ module.exports = function () {
   // Get our initialized service so that we can register hooks and filters
   const service = app.service('videos');
 
+  // Control video privacy settings
+  app.use('/videos/control/play', (req, res, next) => {
+    console.log(req.body);
+    res.sendStatus(200);
+  });
+
   service.hooks(hooks);
 
   if (service.filter) {

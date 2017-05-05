@@ -1,0 +1,16 @@
+<div class="video-item">
+  <div class="container">
+    <div class="four columns">
+      <div class="video-info">
+        <h3>{{video.title}}</h3>
+        <a ui-sref="main.video({id: video.id})">Details</a>
+        <a ui-sref="main.videoEdit({id: video.id})" ng-show="user">Edit</a>
+        <a ng-click="goLive(video)" href="javascript:void(0);" ng-show="video.status == 'pending' && user">Go live</a>
+        <a ng-click="deleteVideo(video)" href="javascript:void(0);" ng-hide="video.status == 'video' || !user">Delete</a>
+      </div>
+    </div>
+    <div class="eight columns">
+      <div class="video-media" voda-media="video"></div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+<div class="voda-media status-{{video.status}}" ratio="16:9">
+  <div class="video-data-container" ng-hide="video.status == 'encoded' || video.status == 'video'">
+    <div class="stream-data">
+      <div ng-show="video.status == 'live'">
+        <div ng-show="videoUrl">
+          <h3>You are ready to go live!</h3>
+          <p>URL</p>
+          <pre><code>{{videoUrl}}</code></pre>
+          <p>Stream name</p>
+          <pre><code>{{video.streamName}}</code></pre>
+          <p>As soon as you connect your live encoding app, this message will disappear.</p>
+        </div>
+        <div ng-hide="videoUrl">
+          <h3>Error</h3>
+          <p>Streaming url not found</p>
+        </div>
+      </div>
+      <div ng-show="video.status == 'pending'">
+        <h3>Pending video</h3>
+        <p>Click to go live and receive instructions</p>
+        <a ng-click="goLive(video)" href="javascript:void(0);" ng-show="user">Go live</a>
+      </div>
+      <div ng-show="video.status == 'encoding'">
+        <h3>Encoding</h3>
+        <p>Video will be available soon.</p>
+      </div>
+    </div>
+  </div>
+  <div class="video-player" voda-player video="video"></div>
+</div>

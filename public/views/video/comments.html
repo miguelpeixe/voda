@@ -1,0 +1,11 @@
+<section class="comment-list" match-height="main-video" scroll-to-bottom ng-show="comments.length">
+  <article class="comment-item" ng-repeat="comment in comments | orderBy:'createdAt'">
+    <p class="comment-author">{{comment.author}}</p>
+    <p class="comment-body">{{comment.comment}}</p>
+  </article>
+</section>
+<form class="comment-form" ng-submit="sendComment()">
+  <input type="text" ng-model="newComment.author" placeholder="Your name" />
+  <textarea id="comment-field" ng-model="newComment.comment" placeholder="Comment"></textarea>
+  <button>Send comment</button>
+</form>

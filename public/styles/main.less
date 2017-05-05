@@ -1,0 +1,207 @@
+@main-color: #d2452b;
+@secondary-color: #fff;
+
+body {
+  font-family: 'Space Mono', monospace;
+  background: #fff;
+  color: #222;
+  font-size: 1.2em;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: normal;
+  letter-spacing: 0;
+}
+
+.input-field {
+  label {
+    font-weight: normal;
+    color: #999;
+  }
+}
+
+input[type=text],
+input[type=email],
+input[type=password],
+input[type=submit],
+textarea,
+button,
+.button,
+a.button {
+  background: transparent;
+  border: 1px solid #ddd;
+  color: #333;
+  font-weight: 400;
+  border-radius: 0;
+  &:hover,
+  &:focus {
+    border: 1px solid #ccc;
+    color: #000;
+  }
+  &:focus {
+    border: 1px solid #bbb;
+  }
+}
+
+code {
+  background: transparent;
+  border-color: #f0f0f0;
+  border-radius: 0;
+}
+
+a {
+  color: @main-color;
+  text-decoration: none;
+  border-bottom: 1px solid @main-color;
+  &:hover {
+    color: darken(@main-color, 10%);
+  }
+}
+
+.container {
+  width: auto;
+  margin: 0 4%;
+  max-width: none;
+  .container {
+    width: auto;
+    margin: 0;
+  }
+}
+
+.hero {
+  padding: 4rem 0;
+  text-align: center;
+}
+
+.main-form {
+  input,
+  textarea {
+    display: block;
+    width: 100%;
+  }
+}
+
+.video-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  li {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.video-item {
+  border-top: 1px solid #f0f0f0;
+  margin: 0;
+  position: relative;
+  overflow: hidden;
+  .video-info {
+    padding: 2rem 0;
+  }
+  h3 {
+    font-size: 2em;
+    margin: 0 0 2rem;
+  }
+}
+
+.voda-media {
+  background: @secondary-color;
+  position: relative;
+  border-left: 1px solid #f0f0f0;
+  border-right: 1px solid #f0f0f0;
+  overflow: auto;
+  transition: all .3s ease-in-out;
+  &.status-encoded,
+  &.status-streaming {
+    overflow: hidden;
+    background: transparent;
+  }
+  .status {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+    border-left: 1px solid rgba(0,0,0,0.2);
+    padding: 1rem;
+    line-height: 1;
+  }
+  .video-data {
+    margin: 2rem;
+    color: #999;
+    h3 {
+      border-bottom: 1px solid #f0f0f0;
+      padding-bottom: 2rem;
+      color: #666
+    }
+    p {
+      margin: 0;
+    }
+  }
+}
+
+.comment-list {
+  overflow: auto;
+  margin: 0 0 2rem;
+  .comment-author {
+    margin: 0;
+    font-size: .8em;
+    color: #666;
+  }
+  .comment-body {
+    margin: 0;
+  }
+  .comment-item {
+    border-bottom: 1px solid #f0f0f0;
+    margin: 1rem 0 0;
+    padding: 0 0 1rem;
+  }
+}
+
+.comment-form {
+  input,textarea {
+    width: 100%;
+    display: block;
+  }
+}
+
+#masthead {
+  z-index: 10;
+  background: @main-color;
+  color: #fff;
+  padding: 1rem 0;
+  margin: 0 0 2rem;
+  h1 {
+    font-size: inherit;
+    line-height: inherit;
+    float: left;
+    margin: 0;
+    a {
+      color: #fff;
+      text-decoration: none;
+      border-bottom-color: #fff;
+    }
+  }
+  a {
+    color: #fff;
+  }
+  #mastnav {
+    float: right;
+    text-transform: lowercase;
+  }
+}
+
+.single-video {
+  .video-content {
+    .video-media {
+      margin: 0 0 2rem;
+    }
+    .video-description {
+      // max-width: 700px;
+      font-size: 1.2em;
+    }
+  }
+}

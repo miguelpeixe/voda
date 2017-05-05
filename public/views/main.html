@@ -1,0 +1,13 @@
+<header id="masthead">
+  <div class="container">
+    <h1 class="brand">
+      <a ui-sref="main.home">voda</a>
+    </h1>
+    <nav id="mastnav">
+      <a ui-sref="main.auth" ng-hide="user">Login</a>
+      <a ui-sref="main.videoEdit" ng-show="user">Upload video</a>
+      <a ng-click="logout()" href="javascript:void();" ng-show="user">Logout</a>
+    </nav>
+  </div>
+</header>
+<div ui-view></div>

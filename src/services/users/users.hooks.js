@@ -10,15 +10,32 @@ const restrict = [
     ownerField: 'id'
   })
 ];
+const discardPrivateProps = [
+  commonHooks.when(
+    hook => hook.params.provider,
+    commonHooks.discard('role'),
+    commonHooks.discard('status')
+  )
+];
+
+const firstUser = () => hook => {
+  return hook.service.find({$limit: 1}).then(users => {
+    if(users.total === 0) {
+      hook.data.role = 'admin';
+      hook.data.status = 'active';
+    }
+    return hook;
+  });
+};
 
 module.exports = {
   before: {
     all: [],
     find: [ authenticate('jwt') ],
     get: [ ...restrict ],
-    create: [ hashPassword() ],
-    update: [ ...restrict, hashPassword() ],
-    patch: [ ...restrict, hashPassword() ],
+    create: [ ...discardPrivateProps, firstUser(), hashPassword() ],
+    update: [ ...restrict, ...discardPrivateProps, hashPassword() ],
+    patch: [ ...restrict, ...discardPrivateProps, hashPassword() ],
     remove: [ ...restrict ]
   },
 
