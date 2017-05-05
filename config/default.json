@@ -1,0 +1,35 @@
+{
+  "host": "localhost",
+  "port": 3030,
+  "public": "../public/",
+  "paginate": {
+    "default": 10,
+    "max": 50
+  },
+  "authentication": {
+    "secret": "7a859fbb80db46b266bac814b1ae4b55127e7ae7df5f7ba31ee6c4f48cdb055fb2f267d148908a7faff66c819841c75b29c9e4257e33bb2c20f3eb70beb67ce0d1a9ae0316273a60028a861f62537882d0e1ba2c47ade894490f352ee76cf0e8262d0931ca935699c7b38c97660f227de37923f39244946c49e56f10effa2ba9aa50deb96b5827e7087ef0f0acb5131dd134b84c8cfccef64895e17b38945f905ca44d336a4d68ba0b0160dfc1c3d6487c9fc90795cf4b33106bf9578aada8305932d229586eba4183b6b93d83bfe0e67fa014604c612c0066d3c62358d8f48f70ab60bff0c29bd6198b38d3e2c3d91600216bdb7a25b495a253e44d3b14336f",
+    "strategies": [
+      "jwt",
+      "local"
+    ],
+    "path": "/authentication",
+    "service": "users",
+    "jwt": {
+      "header": {
+        "type": "access"
+      },
+      "audience": "https://yourdomain.com",
+      "subject": "anonymous",
+      "issuer": "feathers",
+      "algorithm": "HS256",
+      "expiresIn": "1d"
+    },
+    "local": {
+      "entity": "user",
+      "service": "users",
+      "usernameField": "email",
+      "passwordField": "password"
+    }
+  },
+  "postgres": "postgres://docker:docker@db:5432/voda"
+}

@@ -1,0 +1,31 @@
+server:
+  image: aparabolica/elke-nginx
+  links:
+    - app
+  ports:
+    - 8080:80
+    - 1935:1935
+  volumes:
+    - ./nginx/nginx.conf:/config/nginx.conf
+    - ./data/video:/data
+    - ./data/logs:/logs
+postgres:
+  image: postgres:9.6
+  ports:
+    - 15432:5432
+  environment:
+    POSTGRES_USER: 'docker'
+    POSTGRES_PASSWORD: 'docker'
+    POSTGRES_DB: 'voda'
+app:
+  build: .
+  links:
+    - postgres:db
+  command: nodemon src/
+  ports:
+    - 3030:3030
+  environment:
+    NODE_ENV: development
+  volumes:
+    - /home/node/app/node_modules
+    - .:/home/node/app
