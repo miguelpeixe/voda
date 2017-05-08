@@ -11,8 +11,8 @@ angular.module('voda')
     $scope.$watch(function() {
       return $feathers.get('user');
     }, function(user) {
-      console.log(user);
       $scope.user = user;
+      Voda.set('user', user);
     });
     $scope.logout = $feathers.logout;
     // Store app data in global service
@@ -118,6 +118,9 @@ angular.module('voda')
   function($scope, $state, $feathers, Video) {
     var service = $feathers.service('videos');
     $scope.video = angular.copy(Video);
+    $scope.$watch('video', function(video) {
+      console.log(video);
+    }, true);
     $scope.save = function() {
       if(Video.id) {
         service.patch(Video.id, $scope.video).then(function(video) {

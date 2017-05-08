@@ -5,9 +5,13 @@ const Sequelize = require('sequelize');
 module.exports = function (app) {
   const sequelizeClient = app.get('sequelizeClient');
   const videos = sequelizeClient.define('videos', {
-    text: {
+    title: {
       type: Sequelize.STRING,
       allowNull: false
+    },
+    path: {
+      type: Sequelize.STRING,
+      allowNull: true
     },
     description: {
       type: Sequelize.TEXT

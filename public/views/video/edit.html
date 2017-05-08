@@ -8,8 +8,23 @@
           <input id="video_title_field" type="text" ng-model="video.title" autofocus />
         </p>
         <p class="input-field">
+          <label for="video_path_field">Video path</label>
+          <input id="video_path_field" type="text" ng-model="video.path" autofocus />
+        </p>
+        <p class="input-field">
           <label for="video_description_field">Description</label>
           <textarea id="video_description_field" ng-model="video.description"></textarea>
+        </p>
+        <p class="input-field">
+          <label for="video_privacy_field">Privacy settings</label>
+          <div class="radio-group">
+            <label>
+              <input type="radio" name="video_privacy_input" value="public" ng-model="video.privacy"> Public
+            </label>
+            <label>
+              <input type="radio" name="video_privacy_input" value="private" ng-model="video.privacy"> Private
+            </label>
+          </div>
         </p>
         <input type="submit" value="Submit video" />
       </form>

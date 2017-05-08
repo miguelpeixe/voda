@@ -82,6 +82,17 @@ a {
     display: block;
     width: 100%;
   }
+  .radio-group {
+    label {
+      display: inline-block;
+      margin: 0 2rem 0 0;
+    }
+    input {
+      display: inline-block;
+      width: auto;
+      margin: 0;
+    }
+  }
 }
 
 .video-list {
@@ -113,7 +124,8 @@ a {
   position: relative;
   border-left: 1px solid #f0f0f0;
   border-right: 1px solid #f0f0f0;
-  overflow: auto;
+  // overflow: auto;
+  overflow: hidden;
   transition: all .3s ease-in-out;
   &.status-encoded,
   &.status-streaming {

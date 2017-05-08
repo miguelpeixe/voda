@@ -87,26 +87,34 @@ angular.module('voda')
         scope.media = {};
         scope.$watch('video', function(video) {
           var rtmp = Voda.get('rtmp');
-          if(video.status == 'video') {
-            scope.media = {
-              sources: [
-                {
-                  src: 'rtmp://' + rtmp.host + ':' + rtmp.port + '/live/' + video.streamName,
-                  type: 'rtmp/flv'
-                }
-              ]
-            };
-          } else if(video.status == 'encoded') {
-            scope.media = {
-              sources: [
-                {
-                  src: 'rtmp://' + rtmp.host + ':' + rtmp.port + '/archive/&mp4:' + video.streamName + '/720p.mp4',
-                  type: 'rtmp/mp4'
-                }
-              ],
-              poster: '/videos/' + video.streamName + '/thumbs/tn_3.png'
-            };
-          }
+          var token = Voda.get('accessToken');
+          // if(video.status == 'video') {
+          //   scope.media = {
+          //     sources: [
+          //       {
+          //         src: 'rtmp://' + rtmp.host + ':' + rtmp.port + '/live/' + video.streamName,
+          //         type: 'rtmp/flv'
+          //       }
+          //     ]
+          //   };
+          // } else if(video.status == 'encoded') {
+          //   scope.media = {
+          //     sources: [
+          //       {
+          //         src: 'rtmp://' + rtmp.host + ':' + rtmp.port + '/archive/&mp4:' + video.path,
+          //         type: 'rtmp/mp4'
+          //       }
+          //     ]
+          //   };
+          // }
+          scope.media = {
+            sources: [
+              {
+                src: 'rtmp://' + rtmp.host + ':' + rtmp.port + '/archive/&mp4:' + video.path + '?videoid=' + video.id + '&token=' + token,
+                type: 'rtmp/mp4'
+              }
+            ]
+          };
         });
         //listen for when the vjs-media object changes
         // scope.$on('vjsVideoReady', function (e, data) {

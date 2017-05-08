@@ -1,5 +1,7 @@
 'use strict';
 
+const { authenticate } = require('feathers-authentication').hooks;
+
 const appInfo = {
   active: true
 };

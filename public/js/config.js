@@ -18,10 +18,12 @@ angular.module('voda')
 
     var auth = [
       '$q',
+      'Voda',
       '$feathers',
-      function($q, $feathers) {
+      function($q, Voda, $feathers) {
         var deferred = $q.defer();
         $feathers.authenticate().then(function(res) {
+          Voda.set('accessToken', res.accessToken);
           return $feathers.passport.verifyJWT(res.accessToken);
           deferred.resolve(res);
         }).then(function(payload) {
@@ -105,7 +107,10 @@ angular.module('voda')
             if($stateParams.id)
               return $feathers.service('videos').get($stateParams.id);
             else
-              return {};
+              return {
+                privacy: 'public',
+                statuc: 'uploaded' // temporary
+              };
           }
         ]
       }
