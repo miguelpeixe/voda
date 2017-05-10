@@ -27,6 +27,7 @@ angular.module('voda')
           return $feathers.passport.verifyJWT(res.accessToken);
           deferred.resolve(res);
         }).then(function(payload) {
+          Voda.set('payload', payload);
           return $feathers.service('users').get(payload.userId);
         }).then(function(user) {
           $feathers.set('user', user);
@@ -93,6 +94,42 @@ angular.module('voda')
       url: '/auth/?register',
       controller: 'AuthCtrl',
       templateUrl: '/views/auth.html'
+    })
+    .state('main.users', {
+      url: '/users/',
+      controller: 'UsersCtrl',
+      templateUrl: '/views/users/index.html',
+      resolve: {
+        isAuth: isAuth,
+        Users: [
+          'isAuth',
+          '$feathers',
+          function(isAuth, $feathers) {
+            return $feathers.service('users').find();
+          }
+        ]
+      }
+    })
+    .state('main.users.edit', {
+      url: 'edit/?id',
+      controller: 'SingleUserCtrl',
+      templateUrl: '/views/users/edit.html',
+      resolve: {
+        User: [
+          'isAuth',
+          '$feathers',
+          '$stateParams',
+          function(isAuth, $feathers, $stateParams) {
+            if($stateParams.id)
+              return $feathers.service('users').get($stateParams.id);
+            else
+              return {
+                role: 'subscriber',
+                status: 'active' // temporary
+              };
+          }
+        ]
+      }
     })
     .state('main.videoEdit', {
       url: '/videos/edit/?id',

@@ -4,6 +4,7 @@ const createModel = require('../../models/videos.model');
 const hooks = require('./videos.hooks');
 const filters = require('./videos.filters');
 const url = require('url');
+const authentication = require('feathers-authentication');
 
 module.exports = function () {
   const app = this;
@@ -23,31 +24,36 @@ module.exports = function () {
   const service = app.service('videos');
 
   // Control video privacy settings
+  const userService = app.service('users');
   app.use('/videos/control/connect', (req, res, next) => {
     res.sendStatus(200);
   });
   app.use('/videos/control/play', (req, res, next) => {
-    var path = req.body.name.split(':')[1];
-    var token = req.body.token;
-    console.log(req.body);
-    service.find({
-      query: {
-        path: path
-      }
-    }).then(queryRes => {
-      var videoData = queryRes.data[0].dataValues;
-      if(videoData.privacy == 'private') {
-        // Authenticate
-        if(token) {
-          // console.log(token);
-          app.passport.verifyJWT(token).then(payload => {
-            console.log(payload);
-          });
+    const path = req.body.name.split(':')[1];
+    const userid = parseInt(req.body.userid);
+    service.get(req.body.videoid).then(videoRes => {
+      const video = videoRes.dataValues;
+      if(video.path == path) {
+        if(video.privacy == 'private') {
+          if(userid) {
+            userService.get(userid).then(userRes => {
+              const user = userRes.dataValues;
+              if(user.status == 'active') {
+                res.sendStatus(200);
+              } else {
+                res.sendStatus(401);
+              }
+            }, () => {
+              res.sendStatus(401);
+            });
+          } else {
+            res.sendStatus(401);
+          }
         } else {
-          res.sendStatus(401);
+          res.sendStatus(200);
         }
       } else {
-        res.sendStatus(200);
+        res.sendStatus(404);
       }
     }, () => {
       res.sendStatus(404);

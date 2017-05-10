@@ -1,0 +1,33 @@
+<section id="users" ui-view>
+  <div class="container">
+    <div class="twelve columns">
+      <h2>Users</h2>
+      <p>
+        <a class="button" ui-sref="main.users.edit">New user</a>
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>#</ht>
+            <th>Name</ht>
+            <th>Email</ht>
+            <th>Role</ht>
+            <th>Actions</ht>
+            </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="u in users">
+            <td>{{u.id}}</td>
+            <td>{{u.name}}</td>
+            <td>{{u.email}}</td>
+            <td>{{u.role}}</td>
+            <td>
+              <a ui-sref="main.users.edit({id: u.id})">Edit</a>
+              <a href="javascript:void(0);">Delete</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

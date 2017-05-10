@@ -87,7 +87,7 @@ angular.module('voda')
         scope.media = {};
         scope.$watch('video', function(video) {
           var rtmp = Voda.get('rtmp');
-          var token = Voda.get('accessToken');
+          var user = Voda.get('user');
           // if(video.status == 'video') {
           //   scope.media = {
           //     sources: [
@@ -110,7 +110,7 @@ angular.module('voda')
           scope.media = {
             sources: [
               {
-                src: 'rtmp://' + rtmp.host + ':' + rtmp.port + '/archive/&mp4:' + video.path + '?videoid=' + video.id + '&token=' + token,
+                src: 'rtmp://' + rtmp.host + ':' + rtmp.port + '/archive/&mp4:' + video.path + '?videoid=' + video.id + '&userid=' + user.id,
                 type: 'rtmp/mp4'
               }
             ]

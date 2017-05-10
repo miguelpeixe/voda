@@ -110,6 +110,40 @@ angular.module('voda')
   }
 ])
 
+.controller('UsersCtrl', [
+  '$scope',
+  'Users',
+  function($scope, Users) {
+    $scope.users = Users.data;
+  }
+])
+
+.controller('SingleUserCtrl', [
+  '$scope',
+  '$state',
+  '$feathers',
+  'User',
+  function($scope, $state, $feathers, User) {
+    var service = $feathers.service('users');
+    $scope.user = angular.copy(User);
+    console.log(User);
+    $scope.save = function() {
+      if(User.id) {
+        delete $scope.user.password;
+        service.patch(User.id, $scope.user).then(function(user) {
+          $scope.user = user;
+        });
+      } else {
+        service.create($scope.user).then(function(res) {
+          $state.go('main.home');
+        }).catch(function(err) {
+          console.error('Error creating user', err);
+        });
+      }
+    };
+  }
+])
+
 .controller('VideoCtrl', [
   '$scope',
   '$state',
@@ -118,9 +152,6 @@ angular.module('voda')
   function($scope, $state, $feathers, Video) {
     var service = $feathers.service('videos');
     $scope.video = angular.copy(Video);
-    $scope.$watch('video', function(video) {
-      console.log(video);
-    }, true);
     $scope.save = function() {
       if(Video.id) {
         service.patch(Video.id, $scope.video).then(function(video) {

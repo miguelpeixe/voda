@@ -2,14 +2,15 @@
   <div class="container">
     <div class="six columns offset-by-three">
       <form class="main-form" ng-submit="save()">
-        <h2>Upload new video</h2>
+        <h2 ng-show="video.id">Edit video</h2>
+        <h2 ng-hide="video.id">Submit new video</h2>
         <p class="input-field">
           <label for="video_title_field">Video title</label>
           <input id="video_title_field" type="text" ng-model="video.title" autofocus />
         </p>
         <p class="input-field">
           <label for="video_path_field">Video path</label>
-          <input id="video_path_field" type="text" ng-model="video.path" autofocus />
+          <input id="video_path_field" type="text" ng-model="video.path" />
         </p>
         <p class="input-field">
           <label for="video_description_field">Description</label>

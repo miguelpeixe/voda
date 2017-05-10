@@ -1,0 +1,48 @@
+<section id="video">
+  <div class="container">
+    <div class="six columns offset-by-three">
+      <form class="main-form" ng-submit="save()">
+        <h2 ng-show="user.id">Edit user</h2>
+        <h2 ng-hide="user.id">Add new user</h2>
+        <p class="input-field">
+          <label for="user_name_field">Name</label>
+          <input id="user_name_field" type="text" ng-model="user.name" autofocus />
+        </p>
+        <p class="input-field">
+          <label for="user_email_field">Email</label>
+          <input id="user_email_field" type="text" ng-model="user.email" />
+        </p>
+        <p class="input-field">
+          <label for="user_password_field">Password</label>
+          <input id="user_password_field" type="password" ng-model="user.password" />
+        </p>
+        <p class="input-field">
+          <label for="user_role_field">User role</label>
+          <div class="radio-group">
+            <label>
+              <input type="radio" name="user_role_input" value="admin" ng-model="user.role"> Administrator
+            </label>
+            <label>
+              <input type="radio" name="user_role_input" value="publisher" ng-model="user.role"> Publisher
+            </label>
+            <label>
+              <input type="radio" name="user_role_input" value="subscriber" ng-model="user.role"> Subscriber
+            </label>
+          </div>
+        </p>
+        <p class="input-field">
+          <label for="user_status_field">User status</label>
+          <div class="radio-group">
+            <label>
+              <input type="radio" name="user_status_input" value="active" ng-model="user.status"> Active
+            </label>
+            <label>
+              <input type="radio" name="user_status_input" value="pending" ng-model="user.status"> Pending
+            </label>
+          </div>
+        </p>
+        <input type="submit" value="Submit user" />
+      </form>
+    </div>
+  </div>
+</section>
