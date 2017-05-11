@@ -28,6 +28,7 @@ angular.module('voda')
           deferred.resolve(res);
         }).then(function(payload) {
           Voda.set('payload', payload);
+          console.log(payload.userId);
           return $feathers.service('users').get(payload.userId);
         }).then(function(user) {
           $feathers.set('user', user);
@@ -127,6 +128,25 @@ angular.module('voda')
                 role: 'subscriber',
                 status: 'active' // temporary
               };
+          }
+        ]
+      }
+    })
+    .state('main.reports', {
+      url: '/reports/',
+      controller: 'ReportsCtrl',
+      templateUrl: '/views/reports/index.html',
+      resolve: {
+        isAuth: isAuth,
+        Activities: [
+          'isAuth',
+          '$feathers',
+          function(isAuth, $feathers) {
+            return $feathers.service('videoActivities').find({
+              query: {
+                $sort: { createdAt: -1 }
+              }
+            });
           }
         ]
       }

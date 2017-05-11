@@ -39,9 +39,8 @@ module.exports = function (app) {
 
   }, {
     classMethods: {
-      associate (models) { // eslint-disable-line no-unused-vars
-        // Define associations here
-        // See http://docs.sequelizejs.com/en/latest/docs/associations/
+      associate (models) {
+        users.hasMany(models.videoActivities);
       }
     }
   });

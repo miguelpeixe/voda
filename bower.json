@@ -25,7 +25,8 @@
     "vjs-video": "^0.1.6",
     "dashjs": "^2.4.0",
     "videojs-contrib-dash-dist": "^2.5.4",
-    "font-awesome": "fontawesome#^4.7.0"
+    "font-awesome": "fontawesome#^4.7.0",
+    "moment": "^2.18.1"
   },
   "resolutions": {
     "ng-feathers": "^2.2.0"

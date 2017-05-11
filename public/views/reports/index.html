@@ -1,0 +1,44 @@
+<section id="users" ui-view>
+  <div class="container">
+    <div class="twelve columns">
+      <h2>Relatório de acessos</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th></th>
+            <th>Informações</th>
+            <th>Vídeo</th>
+            <th>Usuário</th>
+            <th>IP</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="activity in activities">
+            <td>{{activity.id}}</td>
+            <td>{{activity.createdAt | fromNow}}</td>
+            <td>
+              <span ng-show="activity.statusCode == 200">
+                <span ng-show="activity.status == 'open'">Assistindo agora</span>
+                <span ng-show="activity.status == 'closed'" ng-init="time = getTime(activity)">
+                  <span ng-show="time > 0">
+                    Assistiu por {{time | duration}}
+                  </span>
+                  <span ng-hide="time > 0">
+                    Não pôde reproduzir vídeo
+                  </span>
+                </span>
+              </span>
+              <span ng-hide="activity.statusCode == 200">
+                {{activity.statusCode | statusCode}}
+              </span>
+            </td>
+            <td>{{activity.video.title}}</td>
+            <td>{{activity.user.name}}</td>
+            <td>{{activity.ip}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

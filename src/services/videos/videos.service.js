@@ -25,38 +25,105 @@ module.exports = function () {
 
   // Control video privacy settings
   const userService = app.service('users');
+  const activityService = app.service('videoActivities');
+  const controlResponse = (res, status, action, userid, videoid, ip) => {
+    activityService.create({
+      statusCode: status,
+      action: action,
+      userId: userid,
+      videoId: videoid,
+      ip: ip
+    }, () => {
+      res.sendStatus(status);
+    });
+  };
+  app.use('/videos/control/connect', (req, res, next) => {
+    res.sendStatus(200);
+  });
+  app.use('/videos/control/update', (req, res, next) => {
+    let path = req.body.name.split(':')[1];
+    let userid = parseInt(req.body.userid);
+    let videoid = parseInt(req.body.videoid);
+    activityService.find({
+      query: {
+        status: 'open',
+        userId: userid,
+        videoId: videoid,
+        $sort: {
+          updatedAt: -1
+        }
+      }
+    }).then(activities => {
+      let activity = activities.data[0];
+      if(!activity.data) {
+        activity.data = {};
+      }
+      let timestamps = activity.data.timestamps || [];
+      timestamps.push({
+        time: req.body.time,
+        timestamp: req.body.timestamp,
+      });
+      activity.data.timestamps = timestamps;
+      activityService.patch(activity.id, {data: activity.data}).then(() => {
+        res.sendStatus(200);
+      });
+    }, () => {
+      res.sendStatus(200);
+    });
+  });
+  app.use('/videos/control/done', (req, res, next) => {
+    let path = req.body.name.split(':')[1];
+    let userid = parseInt(req.body.userid);
+    let videoid = parseInt(req.body.videoid);
+    activityService.find({
+      query: {
+        status: 'open',
+        userId: userid,
+        videoId: videoid,
+        $sort: {
+          updatedAt: -1
+        }
+      }
+    }).then(activities => {
+      let activity = activities.data[0];
+      activityService.patch(activity.id, {status: 'closed'}).then(() => {
+        res.sendStatus(200);
+      });
+    }, () => {
+      res.sendStatus(200);
+    });
+  });
   app.use('/videos/control/connect', (req, res, next) => {
     res.sendStatus(200);
   });
   app.use('/videos/control/play', (req, res, next) => {
-    const path = req.body.name.split(':')[1];
-    const userid = parseInt(req.body.userid);
-    service.get(req.body.videoid).then(videoRes => {
-      const video = videoRes.dataValues;
+    let path = req.body.name.split(':')[1];
+    let userid = parseInt(req.body.userid);
+    let videoid = parseInt(req.body.videoid);
+    service.get(req.body.videoid).then(video => {
       if(video.path == path) {
         if(video.privacy == 'private') {
           if(userid) {
-            userService.get(userid).then(userRes => {
-              const user = userRes.dataValues;
+            userService.get(userid).then(user => {
               if(user.status == 'active') {
-                res.sendStatus(200);
+                controlResponse(res, 200, 'play', userid, video.id, req.body.addr);
               } else {
-                res.sendStatus(401);
+                controlResponse(res, 401, 'play', userid, video.id, req.body.addr);
               }
             }, () => {
-              res.sendStatus(401);
+              controlResponse(res, 401, 'play', userid, video.id, req.body.addr);
             });
           } else {
-            res.sendStatus(401);
+            controlResponse(res, 401, 'play', userid, video.id, req.body.addr);
           }
         } else {
-          res.sendStatus(200);
+          controlResponse(res, 200, 'play', userid, video.id, req.body.addr);
         }
       } else {
-        res.sendStatus(404);
+        controlResponse(res, 404, 'play', userid, video.id, req.body.addr);
       }
     }, () => {
-      res.sendStatus(404);
+      controlResponse(res, 404, 'play', userid, video.id, req.body.addr);
     });
   });
 
@@ -65,4 +132,5 @@ module.exports = function () {
   if (service.filter) {
     service.filter(filters);
   }
+
 };

@@ -37,7 +37,7 @@ angular.module('voda')
     $scope.videos = Videos.data;
     videoService.on('created', function(data) {
       $scope.$apply(function() {
-        $scope.videos.push(data);
+        $scope.videos.unshift(data);
       });
     });
     videoService.on('removed', function(data) {
@@ -141,6 +141,56 @@ angular.module('voda')
         });
       }
     };
+  }
+])
+
+.controller('ReportsCtrl', [
+  '$scope',
+  '$feathers',
+  'Activities',
+  function($scope, $feathers, Activities) {
+    $scope.activities = Activities.data;
+    var activityService = $feathers.service('videoActivities');
+    console.log($scope.activities);
+    activityService.on('created', function(data) {
+      $scope.$apply(function() {
+        $scope.activities.unshift(data);
+      });
+    });
+    activityService.on('removed', function(data) {
+      $scope.$apply(function() {
+        $scope.activities = _.filter($scope.activities, function(activity) {
+          return activity.id !== data.id;
+        });
+      });
+    });
+    activityService.on('updated', function(data) {
+      $scope.$apply(function() {
+        $scope.activities.forEach(function(activity, i) {
+          if(activity.id == data.id) {
+            $scope.activities[i] = data;
+          }
+        });
+      });
+    });
+    activityService.on('patched', function(data) {
+      $scope.$apply(function() {
+        $scope.activities.forEach(function(activity, i) {
+          if(activity.id == data.id) {
+            $scope.activities[i] = data;
+          }
+        });
+      });
+    });
+    $scope.getTime = function(activity) {
+      var time = 0;
+      if(activity.data && activity.data.timestamps.length) {
+        return activity.data.timestamps[activity.data.timestamps.length-1].time;
+      } else {
+        return 0;
+      }
+    }
+    console.log($scope.getTime($scope.activities[0]))
   }
 ])
 

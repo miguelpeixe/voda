@@ -4,10 +4,11 @@
       <a ui-sref="main.home">voda</a>
     </h1>
     <nav id="mastnav">
-      <a ui-sref="main.users" ng-show="user">Users</a>
-      <a ui-sref="main.videoEdit" ng-show="user">Submit video</a>
-      <a ng-click="logout()" href="javascript:void();" ng-show="user">Logout</a>
-      <a ui-sref="main.auth" ng-hide="user">Login</a>
+      <a ui-sref="main.users" ng-show="user">Usuários</a>
+      <a ui-sref="main.reports" ng-show="user">Relatório de acessos</a>
+      <a ui-sref="main.videoEdit" ng-show="user">Enviar vídeo</a>
+      <a ng-click="logout()" href="javascript:void();" ng-show="user">Sair</a>
+      <a ui-sref="main.auth" ng-hide="user">Entrar</a>
     </nav>
   </div>
 </header>

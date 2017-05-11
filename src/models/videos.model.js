@@ -29,12 +29,15 @@ module.exports = function (app) {
         'uploaded'
       ),
       defaultValue: 'waiting'
+    },
+    recordedAt: {
+      type: Sequelize.DATE,
+      allowNull: true
     }
   }, {
     classMethods: {
-      associate (models) { // eslint-disable-line no-unused-vars
-        // Define associations here
-        // See http://docs.sequelizejs.com/en/latest/docs/associations/
+      associate (models) {
+        videos.hasMany(models.videoActivities);
       }
     }
   });
