@@ -103,7 +103,7 @@ module.exports = function () {
       if(video.path == path) {
         if(video.privacy == 'private') {
           if(!isNaN(userId)) {
-            userService.get(userid).then(user => {
+            userService.get(userId).then(user => {
               if(user.status == 'active') {
                 controlResponse(res, 200, 'play', clientId, userId, video.id, req.body.addr);
               } else {
