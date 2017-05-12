@@ -97,7 +97,7 @@ module.exports = function () {
     console.log('play', req.body);
     let path = req.body.name.split(':')[1];
     let clientId = parseInt(req.body.clientid);
-    let userId = parseInt(req.body.userid);
+    let userId = isNaN(req.body.userid) ? null : parseInt(req.body.userid);
     let videoId = parseInt(req.body.videoid);
     service.get(req.body.videoid).then(video => {
       if(video.path == path) {
@@ -113,16 +113,16 @@ module.exports = function () {
               controlResponse(res, 401, 'play', clientId, userId, video.id, req.body.addr);
             });
           } else {
-            controlResponse(res, 401, 'play', clientId, null, video.id, req.body.addr);
+            controlResponse(res, 401, 'play', clientId, userId, video.id, req.body.addr);
           }
         } else {
-          controlResponse(res, 200, 'play', clientId, null, video.id, req.body.addr);
+          controlResponse(res, 200, 'play', clientId, userId, video.id, req.body.addr);
         }
       } else {
-        controlResponse(res, 404, 'play', clientId, null, video.id, req.body.addr);
+        controlResponse(res, 404, 'play', clientId, userId, video.id, req.body.addr);
       }
     }, () => {
-      controlResponse(res, 404, 'play', clientId, null, video.id, req.body.addr);
+      controlResponse(res, 404, 'play', clientId, userId, video.id, req.body.addr);
     });
   });
 
