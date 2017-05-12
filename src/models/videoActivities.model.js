@@ -11,7 +11,11 @@ module.exports = function (app) {
     },
     userId: {
       type: Sequelize.INTEGER,
-      allowNull: false,
+      allowNull: true,
+    },
+    clientId: {
+      type: Sequelize.INTEGER,
+      allowNull: false
     },
     action: {
       type: Sequelize.TEXT,

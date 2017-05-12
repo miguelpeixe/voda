@@ -1,9 +1,9 @@
 <section id="video">
   <div class="container">
-    <div class="six columns offset-by-three">
+    <div class="six columns">
       <form class="main-form" ng-submit="save()">
-        <h2 ng-show="user.id">Edit user</h2>
-        <h2 ng-hide="user.id">Add new user</h2>
+        <h2 ng-show="user.id">Editar {{user.name}}</h2>
+        <h2 ng-hide="user.id">Adicionar novo usuário</h2>
         <p class="input-field">
           <label for="user_name_field">Name</label>
           <input id="user_name_field" type="text" ng-model="user.name" autofocus />
@@ -13,11 +13,11 @@
           <input id="user_email_field" type="text" ng-model="user.email" />
         </p>
         <p class="input-field">
-          <label for="user_password_field">Password</label>
+          <label for="user_password_field">Senha</label>
           <input id="user_password_field" type="password" ng-model="user.password" />
         </p>
         <p class="input-field">
-          <label for="user_role_field">User role</label>
+          <label for="user_role_field">Acesso</label>
           <div class="radio-group">
             <label>
               <input type="radio" name="user_role_input" value="admin" ng-model="user.role"> Administrator
@@ -31,7 +31,7 @@
           </div>
         </p>
         <p class="input-field">
-          <label for="user_status_field">User status</label>
+          <label for="user_status_field">Status</label>
           <div class="radio-group">
             <label>
               <input type="radio" name="user_status_input" value="active" ng-model="user.status"> Active

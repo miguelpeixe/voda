@@ -28,7 +28,6 @@ angular.module('voda')
           deferred.resolve(res);
         }).then(function(payload) {
           Voda.set('payload', payload);
-          console.log(payload.userId);
           return $feathers.service('users').get(payload.userId);
         }).then(function(user) {
           $feathers.set('user', user);
@@ -158,14 +157,16 @@ angular.module('voda')
       resolve: {
         isAuth: isAuth,
         Video: [
+          'isAuth',
           '$feathers',
           '$stateParams',
-          function($feathers, $stateParams) {
+          function(isAuth, $feathers, $stateParams) {
             if($stateParams.id)
               return $feathers.service('videos').get($stateParams.id);
             else
               return {
                 privacy: 'public',
+                recordedAt: new Date(),
                 statuc: 'uploaded' // temporary
               };
           }

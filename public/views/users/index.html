@@ -1,18 +1,19 @@
 <section id="users" ui-view>
   <div class="container">
     <div class="twelve columns">
-      <h2>Users</h2>
+      <h2>Usuários</h2>
       <p>
-        <a class="button" ui-sref="main.users.edit">New user</a>
+        <a class="button" ui-sref="main.users.edit">Novo usuário</a>
       </p>
       <table>
         <thead>
           <tr>
             <th>#</th>
-            <th>Name</th>
+            <th>Nome</th>
             <th>Email</th>
-            <th>Role</th>
-            <th>Actions</th>
+            <th>Acesso</th>
+            <th>Status</th>
+            <th>Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -21,9 +22,10 @@
             <td>{{u.name}}</td>
             <td>{{u.email}}</td>
             <td>{{u.role}}</td>
+            <td>{{u.status}}</td>
             <td>
-              <a ui-sref="main.users.edit({id: u.id})">Edit</a>
-              <a href="javascript:void(0);">Delete</a>
+              <a ui-sref="main.users.edit({id: u.id})">Editar</a>
+              <a href="javascript:void(0);">Remover</a>
             </td>
           </tr>
         </tbody>

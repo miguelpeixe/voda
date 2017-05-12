@@ -1,6 +1,6 @@
 <article class="single-video">
   <div class="container">
-    <div class="twelve columns">
+    <div class="eight columns">
       <h2>{{video.title}}</h2>
     </div>
   </div>
@@ -9,6 +9,7 @@
       <div class="eight columns">
         <div id="main-video" class="video-media" voda-media="video"></div>
         <section class="video-description">
+          <p class="meta" ng-show="video.recordedAt">Gravado em {{video.recordedAt | formatDate:'LL'}}</p>
           <p>{{video.description}}</p>
         </section>
       </div>

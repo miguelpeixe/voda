@@ -3,12 +3,12 @@
     <div class="four columns offset-by-four">
       <form ng-submit="auth()" class="main-form">
         <input type="email" ng-model="credentials.email" placeholder="Email" />
-        <input type="password" ng-model="credentials.password" placeholder="Password" />
-        <input type="submit" ng-hide="registration" value="Authenticate" />
-        <input type="submit" ng-show="registration" value="Register" />
+        <input type="password" ng-model="credentials.password" placeholder="Senha" />
+        <input type="submit" ng-hide="registration" value="Entrar" />
+        <input type="submit" ng-show="registration" value="Registrar" />
         <p ng-hide="active">
-          <a ui-sref="auth({register:true})" ng-hide="registration">Register</a>
-          <a ui-sref="auth({register:null})" ng-show="registration">Login</a>
+          <a ui-sref="auth({register:true})" ng-hide="registration">Registrar</a>
+          <a ui-sref="auth({register:null})" ng-show="registration">Entrar</a>
         </p>
       </form>
     </div>

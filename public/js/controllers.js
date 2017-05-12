@@ -15,6 +15,12 @@ angular.module('voda')
       Voda.set('user', user);
     });
     $scope.logout = $feathers.logout;
+    $feathers.on('logout', function() {
+      $scope.$apply(function() {
+        Voda.set('user', false);
+        $state.go('main.home', {reload: true});
+      });
+    });
     // Store app data in global service
     for(var key in App.data) {
       Voda.set(key, App.data[key]);
@@ -23,6 +29,7 @@ angular.module('voda')
     if(!Voda.get('active')) {
       $state.go('main.auth', {register: true});
     }
+    $scope.userIs = Voda.auth.userIs;
   }
 ])
 
@@ -87,7 +94,6 @@ angular.module('voda')
         email: $scope.credentials.email,
         password: $scope.credentials.password
       }).then(function(res) {
-        console.log(res);
         return $feathers.passport.verifyJWT(res.accessToken);
       }).then(function(payload) {
         console.log('JWT payload', payload);
@@ -184,13 +190,13 @@ angular.module('voda')
     });
     $scope.getTime = function(activity) {
       var time = 0;
-      if(activity.data && activity.data.timestamps.length) {
-        return activity.data.timestamps[activity.data.timestamps.length-1].time;
+      if(activity.data && activity.data.lastTimestamp) {
+        time = activity.data.lastTimestamp.time;
       } else {
-        return 0;
+        time = -1;
       }
-    }
-    console.log($scope.getTime($scope.activities[0]))
+      return parseInt(time);
+    };
   }
 ])
 
@@ -202,6 +208,7 @@ angular.module('voda')
   function($scope, $state, $feathers, Video) {
     var service = $feathers.service('videos');
     $scope.video = angular.copy(Video);
+    $scope.video.recordedAt = new Date($scope.video.recordedAt);
     $scope.save = function() {
       if(Video.id) {
         service.patch(Video.id, $scope.video).then(function(video) {

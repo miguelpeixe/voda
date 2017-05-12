@@ -2,11 +2,11 @@
   <div class="container">
     <div class="four columns">
       <div class="video-info">
-        <h3>{{video.title}}</h3>
-        <a ui-sref="main.video({id: video.id})">Details</a>
-        <a ui-sref="main.videoEdit({id: video.id})" ng-show="user">Edit</a>
-        <a ng-click="goLive(video)" href="javascript:void(0);" ng-show="video.status == 'pending' && user">Go live</a>
-        <a ng-click="deleteVideo(video)" href="javascript:void(0);" ng-hide="video.status == 'video' || !user">Delete</a>
+        <h3><a ui-sref="main.video({id: video.id})">{{video.title}}</a></h3>
+        <p class="meta" ng-show="video.recordedAt">Gravado em {{video.recordedAt | formatDate:'LL'}}</p>
+        <p>{{video.description}}</p>
+        <a ui-sref="main.videoEdit({id: video.id})" ng-show="user && userIs(['admin', 'publisher'])">Editar</a>
+        <a ng-click="deleteVideo(video)" href="javascript:void(0);" ng-show="user && userIs(['admin', 'publisher'])">Remover</a>
       </div>
     </div>
     <div class="eight columns">

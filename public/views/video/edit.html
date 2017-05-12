@@ -1,33 +1,37 @@
 <section id="video">
   <div class="container">
-    <div class="six columns offset-by-three">
+    <div class="six columns">
       <form class="main-form" ng-submit="save()">
-        <h2 ng-show="video.id">Edit video</h2>
-        <h2 ng-hide="video.id">Submit new video</h2>
+        <h2 ng-show="video.id">Editar vídeo</h2>
+        <h2 ng-hide="video.id">Enviar novo vídeo</h2>
         <p class="input-field">
-          <label for="video_title_field">Video title</label>
+          <label for="video_title_field">Título do vídeo</label>
           <input id="video_title_field" type="text" ng-model="video.title" autofocus />
         </p>
         <p class="input-field">
-          <label for="video_path_field">Video path</label>
+          <label for="video_path_field">Caminho do vídeo</label>
           <input id="video_path_field" type="text" ng-model="video.path" />
         </p>
         <p class="input-field">
-          <label for="video_description_field">Description</label>
+          <label for="video_description_field" rows="6">Descrição</label>
           <textarea id="video_description_field" ng-model="video.description"></textarea>
         </p>
         <p class="input-field">
-          <label for="video_privacy_field">Privacy settings</label>
+          <label for="video_recorded_field">Data de gravação</label>
+          <input id="video_recorded_field" type="date" ng-model="video.recordedAt" />
+        </p>
+        <p class="input-field">
+          <label for="video_privacy_field">Configurações de privacidade</label>
           <div class="radio-group">
             <label>
-              <input type="radio" name="video_privacy_input" value="public" ng-model="video.privacy"> Public
+              <input type="radio" name="video_privacy_input" value="public" ng-model="video.privacy"> Público
             </label>
             <label>
-              <input type="radio" name="video_privacy_input" value="private" ng-model="video.privacy"> Private
+              <input type="radio" name="video_privacy_input" value="private" ng-model="video.privacy"> Privado
             </label>
           </div>
         </p>
-        <input type="submit" value="Submit video" />
+        <input type="submit" value="Enviar vídeo" />
       </form>
     </div>
   </div>

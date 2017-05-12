@@ -2,7 +2,8 @@ angular.module('voda')
 
 .directive('videoItem', [
   '$feathers',
-  function($feathers) {
+  'Voda',
+  function($feathers, Voda) {
     return {
       restrict: 'A',
       scope: {
@@ -10,6 +11,7 @@ angular.module('voda')
       },
       templateUrl: '/views/video/list-item.html',
       link: function(scope, element, attrs) {
+        scope.userIs = Voda.auth.userIs;
         scope.$watch(function() {
           return $feathers.get('user');
         }, function(user) {
@@ -88,25 +90,6 @@ angular.module('voda')
         scope.$watch('video', function(video) {
           var rtmp = Voda.get('rtmp');
           var user = Voda.get('user');
-          // if(video.status == 'video') {
-          //   scope.media = {
-          //     sources: [
-          //       {
-          //         src: 'rtmp://' + rtmp.host + ':' + rtmp.port + '/live/' + video.streamName,
-          //         type: 'rtmp/flv'
-          //       }
-          //     ]
-          //   };
-          // } else if(video.status == 'encoded') {
-          //   scope.media = {
-          //     sources: [
-          //       {
-          //         src: 'rtmp://' + rtmp.host + ':' + rtmp.port + '/archive/&mp4:' + video.path,
-          //         type: 'rtmp/mp4'
-          //       }
-          //     ]
-          //   };
-          // }
           scope.media = {
             sources: [
               {
@@ -116,14 +99,14 @@ angular.module('voda')
             ]
           };
         });
-        //listen for when the vjs-media object changes
+        // listen for when the vjs-media object changes
         // scope.$on('vjsVideoReady', function (e, data) {
         //   console.log('video id:' + data.id);
         //   console.log('video.js player instance:' + data.player);
         //   console.log('video.js controlBar instance:' + data.controlBar);
         // });
         // scope.$on('vjsVideoMediaChanged', function (e, data) {
-        //   console.log('vjsVideoMediaChanged event was fired');
+        //   console.log('vjsVideoMediaChanged event was fired', data);
         // });
       }
     }

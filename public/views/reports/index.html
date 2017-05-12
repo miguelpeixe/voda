@@ -7,7 +7,7 @@
           <tr>
             <th>#</th>
             <th></th>
-            <th>Informações</th>
+            <th>Tempo de conexão</th>
             <th>Vídeo</th>
             <th>Usuário</th>
             <th>IP</th>
@@ -19,13 +19,16 @@
             <td>{{activity.createdAt | fromNow}}</td>
             <td>
               <span ng-show="activity.statusCode == 200">
-                <span ng-show="activity.status == 'open'">Assistindo agora</span>
+                <span ng-show="activity.status == 'open'">Conectado agora</span>
                 <span ng-show="activity.status == 'closed'" ng-init="time = getTime(activity)">
                   <span ng-show="time > 0">
-                    Assistiu por {{time | duration}}
+                    {{time | duration}}
                   </span>
-                  <span ng-hide="time > 0">
-                    Não pôde reproduzir vídeo
+                  <span ng-show="time == 0">
+                    Menos de 5 segundos
+                  </span>
+                  <span ng-show="time < 0">
+                    Não computado
                   </span>
                 </span>
               </span>
@@ -34,7 +37,10 @@
               </span>
             </td>
             <td>{{activity.video.title}}</td>
-            <td>{{activity.user.name}}</td>
+            <td>
+              <span ng-show="activity.user.length">{{activity.user.name}}</span>
+              <span ng-hide="activity.user.length">Anônimo</span>
+            </td>
             <td>{{activity.ip}}</td>
           </tr>
         </tbody>
