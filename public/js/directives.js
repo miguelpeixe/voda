@@ -86,6 +86,9 @@ angular.module('voda')
       },
       templateUrl: '/views/video/player.html',
       link: function(scope, element, attrs) {
+        scope.options = {
+          techOrder: ["flash", "html5"]
+        };
         scope.media = {};
         scope.$watch('video', function(video) {
           var rtmp = Voda.get('rtmp');
