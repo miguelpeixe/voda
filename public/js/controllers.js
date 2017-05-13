@@ -16,10 +16,7 @@ angular.module('voda')
     });
     $scope.logout = $feathers.logout;
     $feathers.on('logout', function() {
-      $scope.$apply(function() {
-        Voda.set('user', false);
-        $state.go('main.home', {reload: true});
-      });
+      location.reload();
     });
     // Store app data in global service
     for(var key in App.data) {
@@ -96,7 +93,6 @@ angular.module('voda')
       }).then(function(res) {
         return $feathers.passport.verifyJWT(res.accessToken);
       }).then(function(payload) {
-        console.log('JWT payload', payload);
         $state.go('main.home', {}, {reload:true});
       }).catch(function(err) {
         console.error('Error authenticating', err);

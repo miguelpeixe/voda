@@ -5,7 +5,7 @@
         <h2 ng-show="user.id">Editar {{user.name}}</h2>
         <h2 ng-hide="user.id">Adicionar novo usuário</h2>
         <p class="input-field">
-          <label for="user_name_field">Name</label>
+          <label for="user_name_field">Nome</label>
           <input id="user_name_field" type="text" ng-model="user.name" autofocus />
         </p>
         <p class="input-field">
@@ -34,14 +34,14 @@
           <label for="user_status_field">Status</label>
           <div class="radio-group">
             <label>
-              <input type="radio" name="user_status_input" value="active" ng-model="user.status"> Active
+              <input type="radio" name="user_status_input" value="active" ng-model="user.status"> Ativo
             </label>
             <label>
-              <input type="radio" name="user_status_input" value="pending" ng-model="user.status"> Pending
+              <input type="radio" name="user_status_input" value="pending" ng-model="user.status"> Pendente
             </label>
           </div>
         </p>
-        <input type="submit" value="Submit user" />
+        <input type="submit" value="Enviar" />
       </form>
     </div>
   </div>

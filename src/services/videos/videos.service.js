@@ -94,11 +94,9 @@ module.exports = function () {
     });
   });
   app.use('/videos/control/play', (req, res, next) => {
-    console.log('play', req.body);
     let path = req.body.name.split(':')[1];
     let clientId = parseInt(req.body.clientid);
     let userId = isNaN(req.body.userid) ? null : parseInt(req.body.userid);
-    console.log(userId);
     let videoId = parseInt(req.body.videoid);
     service.get(req.body.videoid).then(video => {
       if(video.path == path) {

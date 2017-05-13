@@ -2,6 +2,7 @@
   <div class="container">
     <div class="four columns offset-by-four">
       <form ng-submit="auth()" class="main-form">
+        <input type="text" ng-show="registration" ng-model="credentials.name" placeholder="Nome" />
         <input type="email" ng-model="credentials.email" placeholder="Email" />
         <input type="password" ng-model="credentials.password" placeholder="Senha" />
         <input type="submit" ng-hide="registration" value="Entrar" />
