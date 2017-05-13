@@ -24,6 +24,17 @@ const getHost = (app) => new Promise((resolve, reject) => {
   resolve();
 });
 
+const getUserData = (req) => new Promise((resolve, reject) => {
+  appInfo.client = {
+    addr: req.headers['x-real-ip'] ||
+      req.headers['x-forwarded-for'] ||
+      req.connection.remoteAddress ||
+      req.socket.remoteAddress ||
+      req.connection.socket.remoteAddress
+  };
+  resolve();
+})
+
 const send = res => () => {
   res.send(appInfo);
 };
@@ -31,6 +42,7 @@ const send = res => () => {
 module.exports = app => (req, res) => {
   hasUsers(app)
     .then(getHost(app))
+    .then(getUserData(req))
     .then(send(res))
     .catch(send(res));
 };

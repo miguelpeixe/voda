@@ -7,6 +7,7 @@ angular.module('voda')
   'App',
   'Voda',
   function($scope, $state, $feathers, App, Voda) {
+    console.log(App);
     $scope.user = false;
     $scope.$watch(function() {
       return $feathers.get('user');

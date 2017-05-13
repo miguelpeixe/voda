@@ -104,24 +104,24 @@ module.exports = function () {
           if(!isNaN(userId)) {
             userService.get(userId).then(user => {
               if(user.status == 'active') {
-                controlResponse(res, 200, 'play', clientId, userId, video.id, req.body.addr);
+                controlResponse(res, 200, 'play', clientId, userId, video.id, req.body.clientaddr);
               } else {
-                controlResponse(res, 401, 'play', clientId, userId, video.id, req.body.addr);
+                controlResponse(res, 401, 'play', clientId, userId, video.id, req.body.clientaddr);
               }
             }, () => {
-              controlResponse(res, 401, 'play', clientId, userId, video.id, req.body.addr);
+              controlResponse(res, 401, 'play', clientId, userId, video.id, req.body.clientaddr);
             });
           } else {
-            controlResponse(res, 401, 'play', clientId, userId, video.id, req.body.addr);
+            controlResponse(res, 401, 'play', clientId, userId, video.id, req.body.clientaddr);
           }
         } else {
-          controlResponse(res, 200, 'play', clientId, userId, video.id, req.body.addr);
+          controlResponse(res, 200, 'play', clientId, userId, video.id, req.body.clientaddr);
         }
       } else {
-        controlResponse(res, 404, 'play', clientId, userId, video.id, req.body.addr);
+        controlResponse(res, 404, 'play', clientId, userId, video.id, req.body.clientaddr);
       }
     }, () => {
-      controlResponse(res, 404, 'play', clientId, userId, video.id, req.body.addr);
+      controlResponse(res, 404, 'play', clientId, userId, video.id, req.body.clientaddr);
     });
   });
 

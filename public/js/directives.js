@@ -90,10 +90,11 @@ angular.module('voda')
         scope.$watch('video', function(video) {
           var rtmp = Voda.get('rtmp');
           var user = Voda.get('user');
+          var client = Voda.get('client'); // temporary unsafe client addr
           scope.media = {
             sources: [
               {
-                src: 'rtmp://' + rtmp.host + ':' + rtmp.port + '/archive/&mp4:' + video.path + '?videoid=' + video.id + '&userid=' + user.id,
+                src: 'rtmp://' + rtmp.host + ':' + rtmp.port + '/archive/&mp4:' + video.path + '?videoid=' + video.id + '&userid=' + user.id + '&clientaddr=' + client.addr,
                 type: 'rtmp/mp4'
               }
             ]
