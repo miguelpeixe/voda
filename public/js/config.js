@@ -83,7 +83,7 @@ angular.module('voda')
           function($feathers) {
             return $feathers.service('videos').find({
               query: {
-                $sort: { createdAt: -1 }
+                $sort: { recordedAt: -1 }
               }
             });
           }
