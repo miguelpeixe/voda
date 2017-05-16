@@ -19,6 +19,24 @@ const firstUser = () => hook => {
     return hook;
   });
 };
+const removeActivities = () => hook => {
+  const activityService = hook.app.service('videoActivities');
+  if(hook.type === 'before') {
+    if(hook.method === 'remove') {
+      var removePromises = [];
+      return activityService.find({
+        query: {
+          userId: hook.id
+        }
+      }).then(res => {
+        res.data.forEach(activity => {
+          removePromises.push(activityService.remove(activity.id));
+        });
+        return Promise.all(removePromises).then(values => hook);
+      });
+    }
+  }
+};
 const restrictExisting = [
   authenticate('jwt'),
   restrictToRoles({
@@ -50,7 +68,7 @@ module.exports = {
     create: [ firstUser(), ...restrict, hashPassword() ],
     update: [ ...restrict, hashPassword() ],
     patch: [ ...restrict, hashPassword() ],
-    remove: [ ...restrict ]
+    remove: [ ...restrict, removeActivities() ]
   },
 
   after: {

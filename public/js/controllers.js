@@ -117,9 +117,45 @@ angular.module('voda')
 
 .controller('UsersCtrl', [
   '$scope',
+  '$feathers',
   'Users',
-  function($scope, Users) {
+  function($scope, $feathers, Users) {
+    var service = $feathers.service('users');
     $scope.users = Users.data;
+    service.on('created', function(data) {
+      $scope.$apply(function() {
+        $scope.users.unshift(data);
+      });
+    });
+    service.on('removed', function(data) {
+      $scope.$apply(function() {
+        $scope.users = _.filter($scope.users, function(user) {
+          return user.id !== data.id;
+        });
+      });
+    });
+    service.on('updated', function(data) {
+      $scope.$apply(function() {
+        $scope.users.forEach(function(user, i) {
+          if(user.id == data.id) {
+            $scope.users[i] = data;
+          }
+        });
+      });
+    });
+    service.on('patched', function(data) {
+      $scope.$apply(function() {
+        $scope.users.forEach(function(user, i) {
+          if(user.id == data.id) {
+            $scope.users[i] = data;
+          }
+        });
+      });
+    });
+    $scope.deleteUser = function(user) {
+      if(confirm('Are you sure?'))
+        service.remove(user.id);
+    };
   }
 ])
 
@@ -136,10 +172,11 @@ angular.module('voda')
         delete $scope.user.password;
         service.patch(User.id, $scope.user).then(function(user) {
           $scope.user = user;
+          $state.go('main.users');
         });
       } else {
         service.create($scope.user).then(function(res) {
-          $state.go('main.home');
+          $state.go('main.users');
         }).catch(function(err) {
           console.error('Error creating user', err);
         });

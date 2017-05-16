@@ -167,7 +167,7 @@ angular.module('voda')
               return {
                 privacy: 'public',
                 recordedAt: new Date(),
-                statuc: 'uploaded' // temporary
+                status: 'uploaded' // temporary
               };
           }
         ]
