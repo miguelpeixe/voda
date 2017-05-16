@@ -25,12 +25,12 @@ angular.module('voda')
         $feathers.authenticate().then(function(res) {
           Voda.set('accessToken', res.accessToken);
           return $feathers.passport.verifyJWT(res.accessToken);
-          deferred.resolve(res);
         }).then(function(payload) {
           Voda.set('payload', payload);
           return $feathers.service('users').get(payload.userId);
         }).then(function(user) {
           $feathers.set('user', user);
+          Voda.set('user', user);
           deferred.resolve(user);
         }).catch(function(err) {
           deferred.resolve(false);

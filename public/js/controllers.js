@@ -39,6 +39,9 @@ angular.module('voda')
   function($scope, $state, $feathers, Voda, Videos) {
     var videoService = $feathers.service('videos');
     $scope.videos = Videos.data;
+    if(!$scope.videos.length && !Voda.get('user')) {
+      $state.go('main.auth');
+    }
     videoService.on('created', function(data) {
       $scope.$apply(function() {
         $scope.videos.unshift(data);
@@ -128,7 +131,6 @@ angular.module('voda')
   function($scope, $state, $feathers, User) {
     var service = $feathers.service('users');
     $scope.user = angular.copy(User);
-    console.log(User);
     $scope.save = function() {
       if(User.id) {
         delete $scope.user.password;
@@ -153,7 +155,6 @@ angular.module('voda')
   function($scope, $feathers, Activities) {
     $scope.activities = Activities.data;
     var activityService = $feathers.service('videoActivities');
-    console.log($scope.activities);
     activityService.on('created', function(data) {
       $scope.$apply(function() {
         $scope.activities.unshift(data);
