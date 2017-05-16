@@ -32,9 +32,7 @@ const removeActivities = () => hook => {
         res.data.forEach(activity => {
           removePromises.push(activityService.remove(activity.id));
         });
-        return Promise.all(removePromises).then(values => {
-          return hook;
-        })
+        return Promise.all(removePromises).then(values => hook);
       });
     }
   }
