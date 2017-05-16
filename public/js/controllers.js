@@ -209,6 +209,7 @@ angular.module('voda')
       if(Video.id) {
         service.patch(Video.id, $scope.video).then(function(video) {
           $scope.video = video;
+          $state.go('main.home');
         });
       } else {
         service.create($scope.video).then(function(res) {
