@@ -19,7 +19,9 @@
         <tbody>
           <tr ng-repeat="u in users">
             <td>{{u.id}}</td>
-            <td>{{u.name}}</td>
+            <td>
+              <a ui-sref="main.users.single({id: u.id})">{{u.name}}</a>
+            </td>
             <td>{{u.email}}</td>
             <td>{{u.role}}</td>
             <td>{{u.status}}</td>
@@ -30,6 +32,10 @@
           </tr>
         </tbody>
       </table>
+      <nav class="pagination row">
+        <a class="prev" ui-sref="main.users({page: prevPage()})" ng-show="hasPrevPage()">Página anterior</a>
+        <a class="next" ui-sref="main.users({page: nextPage()})" ng-show="hasNextPage()">Próxima página</a>
+      </nav>
     </div>
   </div>
 </section>

@@ -73,7 +73,7 @@ angular.module('voda')
       }
     })
     .state('main.home', {
-      url: '/',
+      url: '/?page',
       templateUrl: '/views/home.html',
       controller: 'HomeCtrl',
       resolve: {
@@ -100,7 +100,7 @@ angular.module('voda')
       templateUrl: '/views/auth.html'
     })
     .state('main.users', {
-      url: '/users/',
+      url: '/users/?page',
       controller: 'UsersCtrl',
       templateUrl: '/views/users/index.html',
       resolve: {
@@ -122,16 +122,53 @@ angular.module('voda')
         ]
       }
     })
+    .state('main.users.single', {
+      url: ':id/?page',
+      controller: 'SingleUserCtrl',
+      templateUrl: '/views/users/single.html',
+      resolve: {
+        User: [
+          '$feathers',
+          '$stateParams',
+          'isAuth',
+          function($feathers, $stateParams) {
+            if($stateParams.id)
+              return $feathers.service('users').get($stateParams.id);
+            else
+              return {
+                role: 'subscriber',
+                status: 'active' // temporary
+              };
+          }
+        ],
+        Activities: [
+          '$feathers',
+          '$stateParams',
+          'isAuth',
+          function($feathers, $stateParams) {
+            var limit = 10;
+            return $feathers.service('videoActivities').find({
+              query: {
+                userId: $stateParams.id,
+                $limit: limit,
+                $skip: $stateParams.page ? limit*($stateParams.page-1) : 0,
+                $sort: { createdAt: -1 }
+              }
+            });
+          }
+        ]
+      }
+    })
     .state('main.users.edit', {
       url: 'edit/?id',
-      controller: 'SingleUserCtrl',
+      controller: 'EditUserCtrl',
       templateUrl: '/views/users/edit.html',
       resolve: {
         User: [
-          'isAuth',
           '$feathers',
           '$stateParams',
-          function(isAuth, $feathers, $stateParams) {
+          'isAuth',
+          function($feathers, $stateParams) {
             if($stateParams.id)
               return $feathers.service('users').get($stateParams.id);
             else

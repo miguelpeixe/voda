@@ -202,6 +202,46 @@ angular.module('voda')
 
 .controller('SingleUserCtrl', [
   '$scope',
+  '$stateParams',
+  '$feathers',
+  'User',
+  'Activities',
+  function($scope, $stateParams, $feathers, User, Activities) {
+
+    $scope.$watch(function() {
+      return $stateParams.page;
+    }, function(page) {
+      $scope.page = parseInt(page) || 1;
+    });
+    $scope.prevPage = function() {
+      return $scope.page - 1;
+    };
+    $scope.nextPage = function() {
+      return $scope.page + 1;
+    };
+    $scope.hasPrevPage = function() {
+      return $scope.page > 1;
+    };
+    $scope.hasNextPage = function() {
+      return Activities.limit * $scope.page < Activities.total;
+    };
+
+    var service = $feathers.service('users');
+    $scope.user = angular.copy(User);
+    $scope.activities = angular.copy(Activities.data);
+    $scope.getTime = function(activity) {
+      var time = 0;
+      if(activity.data && activity.data.lastTimestamp) {
+        time = activity.data.lastTimestamp.time;
+      } else {
+        time = -1;
+      }
+      return parseInt(time);
+    };
+  }
+])
+.controller('EditUserCtrl', [
+  '$scope',
   '$state',
   '$feathers',
   'User',

@@ -17,6 +17,10 @@
       <ul class="video-list">
         <li ng-repeat="video in videos | filter:search" video-item="video"></li>
       </ul>
+      <nav class="pagination row">
+        <a class="prev" ui-sref="main.home({page: prevPage()})" ng-show="hasPrevPage()">Página anterior</a>
+        <a class="next" ui-sref="main.home({page: nextPage()})" ng-show="hasNextPage()">Próxima página</a>
+      </nav>
     </div>
   </div>
 </section>

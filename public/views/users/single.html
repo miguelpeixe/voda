@@ -1,0 +1,56 @@
+<article class="single-user">
+  <div class="container">
+    <div class="eight columns">
+      <h2>{{user.name}}</h2>
+    </div>
+  </div>
+  <section id="user-report">
+    <div class="container">
+      <div class="twelve columns">
+        <h3>Relatório</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th></th>
+              <th>Tempo de conexão</th>
+              <th>Vídeo</th>
+              <th>IP</th>
+              </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="activity in activities">
+              <td>{{activity.id}}</td>
+              <td>{{activity.createdAt | fromNow}}</td>
+              <td>
+                <span ng-show="activity.statusCode == 200">
+                  <span ng-show="activity.status == 'open'">Conectado agora</span>
+                  <span ng-show="activity.status == 'closed'" ng-init="time = getTime(activity)">
+                    <span ng-show="time > 0">
+                      {{time | duration}}
+                    </span>
+                    <span ng-show="time == 0">
+                      Menos de 5 segundos
+                    </span>
+                    <span ng-show="time < 0">
+                      Não computado
+                    </span>
+                  </span>
+                </span>
+                <span ng-hide="activity.statusCode == 200">
+                  {{activity.statusCode | statusCode}}
+                </span>
+              </td>
+              <td>{{activity.video.title}}</td>
+              <td>{{activity.ip}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <nav class="pagination row">
+          <a class="prev" ui-sref="main.users.single({page: prevPage()})" ng-show="hasPrevPage()">Página anterior</a>
+          <a class="next" ui-sref="main.users.single({page: nextPage()})" ng-show="hasNextPage()">Próxima página</a>
+        </nav>
+      </div>
+    </div>
+  </section>
+</article>
