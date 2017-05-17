@@ -9,6 +9,7 @@
 <section id="videos" ng-show="videos.length">
   <div class="container">
     <div class="twelve columns">
+      <p class="warning u-pull-left" ng-show="flashWarning">O plugin Adobe Flash não foi detectado.<br/>Este plugin é obrigatório para assistir aos vídeos. <a href="https://get.adobe.com/br/flashplayer/" target="_blank" rel="external" title="Download do Adobe Flash Player">Clique aqui</a> para fazer o download.</p>
       <div class="row">
         <nav class="video-nav u-pull-right">
           <input type="text" placeholder="Busque por um vídeo..." ng-model="search" />

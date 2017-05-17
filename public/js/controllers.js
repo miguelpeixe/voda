@@ -7,6 +7,9 @@ angular.module('voda')
   'App',
   'Voda',
   function($scope, $state, $feathers, App, Voda) {
+    if(!swfobject.hasFlashPlayerVersion("1")) {
+      $scope.flashWarning = true;
+    }
     $scope.user = false;
     $scope.$watch(function() {
       return $feathers.get('user');
