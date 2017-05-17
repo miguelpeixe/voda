@@ -20,13 +20,13 @@
           <tr ng-repeat="u in users">
             <td>{{u.id}}</td>
             <td>
-              <a ui-sref="main.users.single({id: u.id})">{{u.name}}</a>
+              <a ui-sref="main.users.single({id: u.id, page: null})">{{u.name}}</a>
             </td>
             <td>{{u.email}}</td>
             <td>{{u.role}}</td>
             <td>{{u.status}}</td>
             <td>
-              <a ui-sref="main.users.edit({id: u.id})">Editar</a>
+              <a ui-sref="main.users.edit({id: u.id, page: null})">Editar</a>
               <a href="javascript:void(0);" ng-click="deleteUser(u)" ng-hide="u.id == 1 || u.id == user.id">Remover</a>
             </td>
           </tr>

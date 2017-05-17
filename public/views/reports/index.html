@@ -38,7 +38,7 @@
             </td>
             <td>{{activity.video.title}}</td>
             <td>
-              <span ng-show="activity.user.name"><a ui-sref="main.users.single({id: activity.user.id })">{{activity.user.name}}</a></span>
+              <span ng-show="activity.user.name"><a ui-sref="main.users.single({id: activity.user.id, page: null})">{{activity.user.name}}</a></span>
               <span ng-hide="activity.user.name">Anônimo</span>
             </td>
             <td>{{activity.ip}}</td>
