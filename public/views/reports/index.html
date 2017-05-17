@@ -45,6 +45,10 @@
           </tr>
         </tbody>
       </table>
+      <nav class="pagination row">
+        <a class="prev" ui-sref="main.reports({page: prevPage()})" ng-show="hasPrevPage()">Página anterior</a>
+        <a class="next" ui-sref="main.reports({page: nextPage()})" ng-show="hasNextPage()">Próxima página</a>
+      </nav>
     </div>
   </div>
 </section>

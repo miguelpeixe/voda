@@ -9,8 +9,13 @@
 <section id="videos" ng-show="videos.length">
   <div class="container">
     <div class="twelve columns">
+      <div class="row">
+        <nav class="video-nav u-pull-right">
+          <input type="text" placeholder="Busque por um vídeo..." ng-model="search" />
+        </nav>
+      </div>
       <ul class="video-list">
-        <li ng-repeat="video in videos" video-item="video"></li>
+        <li ng-repeat="video in videos | filter:search" video-item="video"></li>
       </ul>
     </div>
   </div>

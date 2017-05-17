@@ -33,12 +33,33 @@ angular.module('voda')
 .controller('HomeCtrl', [
   '$scope',
   '$state',
+  '$stateParams',
   '$feathers',
   'Voda',
   'Videos',
-  function($scope, $state, $feathers, Voda, Videos) {
+  function($scope, $state, $stateParams, $feathers, Voda, Videos) {
+
+    $scope.$watch(function() {
+      return $stateParams.page;
+    }, function(page) {
+      $scope.page = parseInt(page) || 1;
+    });
+    $scope.prevPage = function() {
+      return $scope.page - 1;
+    };
+    $scope.nextPage = function() {
+      return $scope.page + 1;
+    };
+    $scope.hasPrevPage = function() {
+      return $scope.page > 1;
+    };
+    $scope.hasNextPage = function() {
+      return Videos.limit * $scope.page < Videos.total;
+    };
+
+    $scope.search = '';
     var videoService = $feathers.service('videos');
-    $scope.videos = Videos.data;
+    $scope.videos = angular.copy(Videos.data);
     if(!$scope.videos.length && !Voda.get('user')) {
       $state.go('main.auth');
     }
@@ -118,8 +139,28 @@ angular.module('voda')
 .controller('UsersCtrl', [
   '$scope',
   '$feathers',
+  '$stateParams',
   'Users',
-  function($scope, $feathers, Users) {
+  function($scope, $feathers, $stateParams, Users) {
+
+    $scope.$watch(function() {
+      return $stateParams.page;
+    }, function(page) {
+      $scope.page = parseInt(page) || 1;
+    });
+    $scope.prevPage = function() {
+      return $scope.page - 1;
+    };
+    $scope.nextPage = function() {
+      return $scope.page + 1;
+    };
+    $scope.hasPrevPage = function() {
+      return $scope.page > 1;
+    };
+    $scope.hasNextPage = function() {
+      return Videos.limit * $scope.page < Videos.total;
+    };
+
     var service = $feathers.service('users');
     $scope.users = Users.data;
     service.on('created', function(data) {
@@ -188,10 +229,30 @@ angular.module('voda')
 .controller('ReportsCtrl', [
   '$scope',
   '$feathers',
+  '$stateParams',
   'Activities',
-  function($scope, $feathers, Activities) {
+  function($scope, $feathers, $stateParams, Activities) {
+    $scope.$watch(function() {
+      return $stateParams.page;
+    }, function(page) {
+      $scope.page = parseInt(page) || 1;
+    });
+    $scope.prevPage = function() {
+      return $scope.page - 1;
+    };
+    $scope.nextPage = function() {
+      return $scope.page + 1;
+    };
+    $scope.hasPrevPage = function() {
+      return $scope.page > 1;
+    };
+    $scope.hasNextPage = function() {
+      return Activities.limit * $scope.page < Activities.total;
+    };
+
     $scope.activities = Activities.data;
     var activityService = $feathers.service('videoActivities');
+
     activityService.on('created', function(data) {
       $scope.$apply(function() {
         $scope.activities.unshift(data);

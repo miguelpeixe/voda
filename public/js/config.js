@@ -79,10 +79,14 @@ angular.module('voda')
       resolve: {
         Videos: [
           '$feathers',
+          '$stateParams',
           'Auth',
-          function($feathers) {
+          function($feathers, $stateParams) {
+            var limit = 10;
             return $feathers.service('videos').find({
               query: {
+                $limit: limit,
+                $skip: $stateParams.page ? limit*($stateParams.page-1) : 0,
                 $sort: { recordedAt: -1 }
               }
             });
@@ -103,9 +107,17 @@ angular.module('voda')
         isAuth: isAuth,
         Users: [
           'isAuth',
+          '$stateParams',
           '$feathers',
-          function(isAuth, $feathers) {
-            return $feathers.service('users').find();
+          function(isAuth, $stateParams, $feathers) {
+            var limit = 10;
+            return $feathers.service('users').find({
+              query: {
+                $limit: limit,
+                $skip: $stateParams.page ? limit*($stateParams.page-1) : 0,
+                $sort: { createdAt: -1 }
+              }
+            });
           }
         ]
       }
@@ -132,7 +144,7 @@ angular.module('voda')
       }
     })
     .state('main.reports', {
-      url: '/reports/',
+      url: '/reports/?page',
       controller: 'ReportsCtrl',
       templateUrl: '/views/reports/index.html',
       resolve: {
@@ -140,9 +152,13 @@ angular.module('voda')
         Activities: [
           'isAuth',
           '$feathers',
-          function(isAuth, $feathers) {
+          '$stateParams',
+          function(isAuth, $feathers, $stateParams) {
+            var limit = 10;
             return $feathers.service('videoActivities').find({
               query: {
+                $limit: limit,
+                $skip: $stateParams.page ? limit*($stateParams.page-1) : 0,
                 $sort: { createdAt: -1 }
               }
             });
