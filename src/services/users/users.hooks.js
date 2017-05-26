@@ -1,5 +1,6 @@
 const { authenticate } = require('feathers-authentication').hooks;
-const { when, isNot, every, discard } = require('feathers-hooks-common');
+const dehydrate = require('feathers-sequelize/lib/hooks/dehydrate');
+const { when, isNot, every, discard, populate } = require('feathers-hooks-common');
 const { restrictToRoles, restrictToOwner } = require('feathers-authentication-hooks');
 const { hashPassword } = require('feathers-authentication-local').hooks;
 const discardPrivateProps = [
@@ -60,6 +61,19 @@ const restrict = [
     })
   )
 ];
+const populateSchema = {
+  service: 'users',
+  include: [
+    {
+      service: 'videoActivities',
+      nameAs: 'videoActivities',
+      parentField: 'id',
+      childField: 'userId',
+      paginate: false,
+      select: () => ({ $select: ['ip'] })
+    }
+  ]
+};
 module.exports = {
   before: {
     all: [],
@@ -75,7 +89,9 @@ module.exports = {
     all: [
       when(
         hook => hook.params.provider,
-        discard('password')
+        discard('password'),
+        dehydrate(),
+        populate({ schema: populateSchema })
       )
     ],
     find: [],

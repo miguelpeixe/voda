@@ -1,14 +1,43 @@
 <article class="single-user">
   <div class="container">
     <div class="eight columns">
-      <h2>{{user.name}}</h2>
+      <h3>{{u.name}}</h3>
     </div>
   </div>
+  <section id="user-info">
+    <div class="container">
+      <div class"twelve columns">
+        <table>
+          <tr>
+            <th>Email</th>
+            <td>{{u.email}}</td>
+          </tr>
+          <tr>
+            <th>Acesso</th>
+            <td>{{u.role}}</td>
+          </tr>
+          <tr>
+            <th>Status</th>
+            <td>{{u.status}}</td>
+          </tr>
+        </table>
+        <nav>
+          <p>
+            <a ui-sref="main.users.edit({id: u.id, page: null})">Editar</a>
+            <a href="javascript:void(0);" ng-click="deleteUser(u)" ng-hide="u.id == 1 || u.id == user.id">Remover</a>
+          </p>
+        </nav>
+      </div>
+    </div>
+  </section>
+  <hr/>
   <section id="user-report">
     <div class="container">
       <div class="twelve columns">
-        <h3>Relatório</h3>
-        <table>
+        <h4>Relatório do usuário</h4>
+        <p ng-show="activitiesCount">{{u.name}} realizou <strong>{{activitiesCount}} conexões</strong> a vídeos.</p>
+        <p ng-hide="activitiesCount">{{u.name}} ainda não assistiu aos vídeos.</p>
+        <table ng-show="activitiesCount">
           <thead>
             <tr>
               <th>#</th>
@@ -47,8 +76,8 @@
           </tbody>
         </table>
         <nav class="pagination row">
-          <a class="prev" ui-sref="main.users.single({page: prevPage()})" ng-show="hasPrevPage()">Página anterior</a>
-          <a class="next" ui-sref="main.users.single({page: nextPage()})" ng-show="hasNextPage()">Próxima página</a>
+          <a class="prev" ui-sref="main.users.single({report_page: prevPage()})" ng-show="hasPrevPage()">Página anterior</a>
+          <a class="next" ui-sref="main.users.single({report_page: nextPage()})" ng-show="hasNextPage()">Próxima página</a>
         </nav>
       </div>
     </div>

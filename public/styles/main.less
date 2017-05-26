@@ -14,15 +14,26 @@ h3,
 h4 {
   font-weight: normal;
   letter-spacing: 0;
+  a {
+    border: 0;
+    text-decoration: none;
+    color: inherit;
+  }
 }
 
 h2 {
-  margin: 2rem 0 4rem;
+  margin: 2rem 0;
 }
 
 h3 {
   margin: 0 0 2rem;
   font-size: 2em;
+}
+
+h4 {
+  text-transform: uppercase;
+  font-size: 1.4em;
+  color: #999;
 }
 
 .input-field {
@@ -46,11 +57,13 @@ a.button {
   color: #333;
   font-weight: 400;
   border-radius: 0;
-  height: auto;
-  line-height: 1.5;
-  padding: 10px 15px;
+  padding: 0 15px;
   box-shadow: none;
   box-sizing: border-box;
+  display: inline-block;
+  height: 40px;
+  line-height: 40px;
+  margin: 0;
   &:hover,
   &:focus {
     border: 1px solid #ccc;
@@ -100,6 +113,16 @@ a {
   .container {
     width: auto;
     margin: 0;
+  }
+}
+
+.page-header {
+  .header-nav {
+    padding-top: .5rem;
+    form {
+      display: inline-block;
+      margin: 0;
+    }
   }
 }
 
@@ -236,6 +259,7 @@ a {
 }
 
 .pagination {
+  margin: 4rem 0;
   .prev {
     float: left;
   }

@@ -142,9 +142,15 @@ angular.module('voda')
 .controller('UsersCtrl', [
   '$scope',
   '$feathers',
+  '$state',
   '$stateParams',
   'Users',
-  function($scope, $feathers, $stateParams, Users) {
+  function($scope, $feathers, $state, $stateParams, Users) {
+
+    $scope.userSearch = $stateParams.s || '';
+    $scope.searchUser = function() {
+      $state.go('main.users', {s: $scope.userSearch, page: null});
+    };
 
     $scope.$watch(function() {
       return $stateParams.page;
@@ -161,7 +167,7 @@ angular.module('voda')
       return $scope.page > 1;
     };
     $scope.hasNextPage = function() {
-      return Videos.limit * $scope.page < Videos.total;
+      return Users.limit * $scope.page < Users.total;
     };
 
     var service = $feathers.service('users');
@@ -211,8 +217,10 @@ angular.module('voda')
   'Activities',
   function($scope, $stateParams, $feathers, User, Activities) {
 
+    $scope.activitiesCount = Activities.total;
+
     $scope.$watch(function() {
-      return $stateParams.page;
+      return $stateParams.report_page;
     }, function(page) {
       $scope.page = parseInt(page) || 1;
     });
@@ -230,7 +238,7 @@ angular.module('voda')
     };
 
     var service = $feathers.service('users');
-    $scope.user = angular.copy(User);
+    $scope.u = angular.copy(User);
     $scope.activities = angular.copy(Activities.data);
     $scope.getTime = function(activity) {
       var time = 0;
@@ -240,6 +248,10 @@ angular.module('voda')
         time = -1;
       }
       return parseInt(time);
+    };
+    $scope.deleteUser = function(user) {
+      if(confirm('Are you sure?'))
+        service.remove(user.id);
     };
   }
 ])

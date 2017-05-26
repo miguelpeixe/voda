@@ -100,30 +100,55 @@ angular.module('voda')
       templateUrl: '/views/auth.html'
     })
     .state('main.users', {
-      url: '/users/?page',
+      url: '/users/?page&s',
       controller: 'UsersCtrl',
       templateUrl: '/views/users/index.html',
       resolve: {
         isAuth: isAuth,
         Users: [
-          'isAuth',
           '$stateParams',
           '$feathers',
-          function(isAuth, $stateParams, $feathers) {
+          'isAuth',
+          function($stateParams, $feathers) {
             var limit = 10;
+            var s = $stateParams.s || '';
             return $feathers.service('users').find({
               query: {
+                name: {
+                  $iLike: '%' + s + '%'
+                },
                 $limit: limit,
                 $skip: $stateParams.page ? limit*($stateParams.page-1) : 0,
-                $sort: { createdAt: -1 }
+                $sort: { name: 1 }
               }
             });
           }
         ]
       }
     })
+    .state('main.users.edit', {
+      url: 'edit/?id',
+      controller: 'EditUserCtrl',
+      templateUrl: '/views/users/edit.html',
+      resolve: {
+        User: [
+          'isAuth',
+          '$feathers',
+          '$stateParams',
+          function(isAuth, $feathers, $stateParams) {
+            if($stateParams.id)
+              return $feathers.service('users').get($stateParams.id);
+            else
+              return {
+                role: 'subscriber',
+                status: 'active' // temporary
+              };
+          }
+        ]
+      }
+    })
     .state('main.users.single', {
-      url: ':id/?page',
+      url: ':id/?report_page',
       controller: 'SingleUserCtrl',
       templateUrl: '/views/users/single.html',
       resolve: {
@@ -151,31 +176,10 @@ angular.module('voda')
               query: {
                 userId: $stateParams.id,
                 $limit: limit,
-                $skip: $stateParams.page ? limit*($stateParams.page-1) : 0,
+                $skip: $stateParams.report_page ? limit*($stateParams.report_page-1) : 0,
                 $sort: { createdAt: -1 }
               }
             });
-          }
-        ]
-      }
-    })
-    .state('main.users.edit', {
-      url: 'edit/?id',
-      controller: 'EditUserCtrl',
-      templateUrl: '/views/users/edit.html',
-      resolve: {
-        User: [
-          '$feathers',
-          '$stateParams',
-          'isAuth',
-          function($feathers, $stateParams) {
-            if($stateParams.id)
-              return $feathers.service('users').get($stateParams.id);
-            else
-              return {
-                role: 'subscriber',
-                status: 'active' // temporary
-              };
           }
         ]
       }

@@ -1,41 +1,57 @@
-<section id="users" ui-view>
-  <div class="container">
-    <div class="twelve columns">
-      <h2>Usuários</h2>
-      <p>
-        <a class="button" ui-sref="main.users.edit">Novo usuário</a>
-      </p>
-      <table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Nome</th>
-            <th>Email</th>
-            <th>Acesso</th>
-            <th>Status</th>
-            <th>Ações</th>
+<section id="users">
+  <header class="page-header row">
+    <div class="container">
+      <div class="twelve columns">
+        <div class="page-header-content">
+          <nav class="user-nav header-nav u-pull-right">
+            <a class="button" ui-sref="main.users.edit">Novo usuário</a>
+            <form ng-submit="searchUser()">
+              <input type="text" placeholder="Busque por um usuário..." ng-model="userSearch" autofocus />
+            </form>
+          </nav>
+          <h2><a ui-sref="main.users" ui-sref-opts="{inherit:false}">Usuários</a></h2>
+        </div>
+      </div>
+    </div>
+  </header>
+  <hr/>
+  <div ui-view>
+    <div class="container">
+      <div class="twelve columns">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nome</th>
+              <th>Email</th>
+              <th>Acesso</th>
+              <th>Status</th>
+              <th>Conexões a vídeos</th>
+              <th>Ações</th>
+              </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="u in users">
+              <td>{{u.id}}</td>
+              <td>
+                <a ui-sref="main.users.single({id: u.id, page: null})">{{u.name}}</a>
+              </td>
+              <td>{{u.email}}</td>
+              <td>{{u.role}}</td>
+              <td>{{u.status}}</td>
+              <td>{{u.videoActivities.length}}</td>
+              <td>
+                <a ui-sref="main.users.edit({id: u.id, page: null})">Editar</a>
+                <a href="javascript:void(0);" ng-click="deleteUser(u)" ng-hide="u.id == 1 || u.id == user.id">Remover</a>
+              </td>
             </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="u in users">
-            <td>{{u.id}}</td>
-            <td>
-              <a ui-sref="main.users.single({id: u.id, page: null})">{{u.name}}</a>
-            </td>
-            <td>{{u.email}}</td>
-            <td>{{u.role}}</td>
-            <td>{{u.status}}</td>
-            <td>
-              <a ui-sref="main.users.edit({id: u.id, page: null})">Editar</a>
-              <a href="javascript:void(0);" ng-click="deleteUser(u)" ng-hide="u.id == 1 || u.id == user.id">Remover</a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <nav class="pagination row">
-        <a class="prev" ui-sref="main.users({page: prevPage()})" ng-show="hasPrevPage()">Página anterior</a>
-        <a class="next" ui-sref="main.users({page: nextPage()})" ng-show="hasNextPage()">Próxima página</a>
-      </nav>
+          </tbody>
+        </table>
+        <nav class="pagination row">
+          <a class="prev" ui-sref="main.users({page: prevPage()})" ng-show="hasPrevPage()">Página anterior</a>
+          <a class="next" ui-sref="main.users({page: nextPage()})" ng-show="hasNextPage()">Próxima página</a>
+        </nav>
+      </div>
     </div>
   </div>
 </section>
