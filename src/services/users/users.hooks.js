@@ -20,6 +20,17 @@ const firstUser = () => hook => {
     return hook;
   });
 };
+const admin = () => hook => {
+  if(hook.params.user) {
+    if(hook.params.user.role == 'admin') {
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    return false;
+  }
+};
 const removeActivities = () => hook => {
   const activityService = hook.app.service('videoActivities');
   if(hook.type === 'before') {
@@ -89,7 +100,10 @@ module.exports = {
     all: [
       when(
         hook => hook.params.provider,
-        discard('password'),
+        discard('password')
+      ),
+      when(
+        admin(),
         dehydrate(),
         populate({ schema: populateSchema })
       )
