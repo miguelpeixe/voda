@@ -6,7 +6,11 @@
           <nav class="user-nav header-nav u-pull-right">
             <a class="button" ui-sref="main.users.edit">Novo usuário</a>
             <form ng-submit="searchUser()">
-              <input type="text" placeholder="Busque por um usuário..." ng-model="userSearch" autofocus />
+              <label>
+                <a ui-sref="main.users" ui-sref-opts="{inherit:false}" ng-show="isSearch" class="fa fa-close"></a>
+                <span ng-hide="isSearch" class="fa fa-search"></span>
+                <input type="text" placeholder="Busque por um usuário..." ng-model="userSearch" autofocus />
+              </label>
             </form>
           </nav>
           <h2><a ui-sref="main.users" ui-sref-opts="{inherit:false}">Usuários</a></h2>

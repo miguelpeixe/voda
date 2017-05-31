@@ -42,6 +42,12 @@ angular.module('voda')
   'Videos',
   function($scope, $state, $stateParams, $feathers, Voda, Videos) {
 
+    $scope.isSearch = !!$stateParams.s;
+    $scope.videoSearch = $stateParams.s || '';
+    $scope.searchVideo = function() {
+      $state.go('main.home', {s: $scope.videoSearch, page: null});
+    };
+
     $scope.$watch(function() {
       return $stateParams.page;
     }, function(page) {
@@ -147,6 +153,7 @@ angular.module('voda')
   'Users',
   function($scope, $feathers, $state, $stateParams, Users) {
 
+    $scope.isSearch = !!$stateParams.s;
     $scope.userSearch = $stateParams.s || '';
     $scope.searchUser = function() {
       $state.go('main.users', {s: $scope.userSearch, page: null});

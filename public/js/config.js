@@ -73,7 +73,7 @@ angular.module('voda')
       }
     })
     .state('main.home', {
-      url: '/?page',
+      url: '/?page&s',
       templateUrl: '/views/home.html',
       controller: 'HomeCtrl',
       resolve: {
@@ -83,12 +83,20 @@ angular.module('voda')
           'Auth',
           function($feathers, $stateParams) {
             var limit = 10;
+            var search = $stateParams.s;
+            var query = {
+              $limit: limit,
+              $skip: $stateParams.page ? limit*($stateParams.page-1) : 0,
+              $sort: { recordedAt: -1 }
+            };
+            if(search) {
+              query['$or'] = [
+                { title: { $iLike: '%' + search + '%' } },
+                { description: { $iLike: '%' + search + '%' } }
+              ];
+            }
             return $feathers.service('videos').find({
-              query: {
-                $limit: limit,
-                $skip: $stateParams.page ? limit*($stateParams.page-1) : 0,
-                $sort: { recordedAt: -1 }
-              }
+              query: query
             });
           }
         ]

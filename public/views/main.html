@@ -1,10 +1,10 @@
 <header id="masthead">
   <div class="container">
     <h1 class="brand">
-      <a ui-sref="main.home">Terapia da Mão</a>
+      <a ui-sref="main.home" ui-sref-opts="{inherit:false}">Terapia da Mão</a>
     </h1>
     <nav id="mastnav">
-      <a ui-sref="main.users" ng-show="user && userIs('admin')">Usuários</a>
+      <a ui-sref="main.users" ui-sref-opts="{inherit: false}" ng-show="user && userIs('admin')">Usuários</a>
       <a ui-sref="main.reports" ng-show="user && userIs('admin')">Relatório de acessos</a>
       <a ui-sref="main.videoEdit({id: null})" ng-show="user && userIs(['admin', 'publisher'])">Enviar vídeo</a>
       <a ng-click="logout()" href="javascript:void(0);" ng-show="user">Sair</a>
