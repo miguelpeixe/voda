@@ -94,25 +94,30 @@ module.exports = function () {
     });
   });
   app.use('/videos/control/play', (req, res, next) => {
-    let path = req.body.name.split(':')[1];
-    let clientId = parseInt(req.body.clientid);
-    let userId = isNaN(req.body.userid) ? null : parseInt(req.body.userid);
-    let videoId = parseInt(req.body.videoid);
+    const pageUrl = req.body.pageurl;
+    const path = req.body.name.split(':')[1];
+    const clientId = parseInt(req.body.clientid);
+    const userId = isNaN(req.body.userid) ? null : parseInt(req.body.userid);
+    const videoId = parseInt(req.body.videoid);
     service.get(req.body.videoid).then(video => {
       if(video.path == path) {
         if(video.privacy == 'private') {
-          if(!isNaN(userId)) {
-            userService.get(userId).then(user => {
-              if(user.status == 'active') {
-                controlResponse(res, 200, 'play', clientId, userId, video.id, req.body.clientaddr);
-              } else {
+          if(pageUrl.indexOf(app.get('host')) !== -1) {
+            if(!isNaN(userId)) {
+              userService.get(userId).then(user => {
+                if(user.status == 'active') {
+                  controlResponse(res, 200, 'play', clientId, userId, video.id, req.body.clientaddr);
+                } else {
+                  controlResponse(res, 401, 'play', clientId, userId, video.id, req.body.clientaddr);
+                }
+              }, () => {
                 controlResponse(res, 401, 'play', clientId, userId, video.id, req.body.clientaddr);
-              }
-            }, () => {
+              });
+            } else {
               controlResponse(res, 401, 'play', clientId, userId, video.id, req.body.clientaddr);
-            });
+            }
           } else {
-            controlResponse(res, 401, 'play', clientId, userId, video.id, req.body.clientaddr);
+            controlResponse(res, 400, 'play', clientId, userId, video.id, req.body.clientaddr);
           }
         } else {
           controlResponse(res, 200, 'play', clientId, userId, video.id, req.body.clientaddr);
