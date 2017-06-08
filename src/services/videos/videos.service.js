@@ -94,6 +94,7 @@ module.exports = function () {
     });
   });
   app.use('/videos/control/play', (req, res, next) => {
+    const addr = req.body.clientaddr;
     const pageUrl = req.body.pageurl;
     const path = req.body.name.split(':')[1];
     const clientId = parseInt(req.body.clientid);
@@ -106,27 +107,27 @@ module.exports = function () {
             if(!isNaN(userId)) {
               userService.get(userId).then(user => {
                 if(user.status == 'active') {
-                  controlResponse(res, 200, 'play', clientId, userId, video.id, req.body.clientaddr);
+                  controlResponse(res, 200, 'play', clientId, userId, video.id, addr);
                 } else {
-                  controlResponse(res, 401, 'play', clientId, userId, video.id, req.body.clientaddr);
+                  controlResponse(res, 401, 'play', clientId, userId, video.id, addr);
                 }
               }, () => {
-                controlResponse(res, 401, 'play', clientId, userId, video.id, req.body.clientaddr);
+                controlResponse(res, 401, 'play', clientId, userId, video.id, addr);
               });
             } else {
-              controlResponse(res, 401, 'play', clientId, userId, video.id, req.body.clientaddr);
+              controlResponse(res, 401, 'play', clientId, userId, video.id, addr);
             }
           } else {
-            controlResponse(res, 400, 'play', clientId, userId, video.id, req.body.clientaddr);
+            controlResponse(res, 400, 'play', clientId, userId, video.id, addr);
           }
         } else {
-          controlResponse(res, 200, 'play', clientId, userId, video.id, req.body.clientaddr);
+          controlResponse(res, 200, 'play', clientId, userId, video.id, addr);
         }
       } else {
-        controlResponse(res, 404, 'play', clientId, userId, video.id, req.body.clientaddr);
+        controlResponse(res, 404, 'play', clientId, userId, video.id, addr);
       }
     }, () => {
-      controlResponse(res, 404, 'play', clientId, userId, video.id, req.body.clientaddr);
+      controlResponse(res, 404, 'play', clientId, userId, video.id, addr);
     });
   });
 

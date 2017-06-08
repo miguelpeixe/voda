@@ -27,6 +27,9 @@ angular.module('voda')
         case '401':
           text = 'Não autorizado';
           break;
+        case '400':
+          text = 'Pedido não pode ser entendido';
+          break;
       }
       return text;
     }
