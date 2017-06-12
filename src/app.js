@@ -21,8 +21,12 @@ const postgres = require('./postgres');
 
 const app = feathers();
 
+const bundles = require('../bundle.result.json');
+
 // Load app configuration
 app.configure(configuration(path.join(__dirname, '..')));
+// Views
+app.set('view engine', 'pug');
 // Enable CORS, security, compression, favicon and body parsing
 app.use(cors());
 app.use(helmet());
@@ -32,6 +36,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(favicon(path.join(app.get('public'), 'favicon.ico')));
 // Host the public folder
 app.use('/', feathers.static(app.get('public')));
+app.get('/', function(req, res) {
+  res.render('../public/index', {bundle: bundles});
+});
 
 // Set up Plugins and providers
 app.configure(hooks());

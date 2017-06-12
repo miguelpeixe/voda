@@ -2,11 +2,21 @@
   <div class="container">
     <div class="four columns offset-by-four">
       <form ng-submit="auth()" class="main-form">
-        <input type="text" ng-show="registration" ng-model="credentials.name" placeholder="Nome" />
-        <input type="email" ng-model="credentials.email" placeholder="Email" />
-        <input type="password" ng-model="credentials.password" placeholder="Senha" />
-        <input type="submit" ng-hide="registration" value="Entrar" />
-        <input type="submit" ng-show="registration" value="Registrar" />
+        <p ng-show="registration">
+          <input type="text" ng-model="credentials.name" placeholder="Nome" />
+        </p>
+        <p>
+          <input type="email" ng-model="credentials.email" placeholder="Email" />
+        </p>
+        <p>
+          <input type="password" ng-model="credentials.password" placeholder="Senha" />
+        </p>
+        <p ng-hide="registration">
+          <input type="submit" value="Entrar" />
+        </p>
+        <p ng-show="registration">
+          <input type="submit" value="Registrar" />
+        </p>
         <p ng-hide="active">
           <a ui-sref="auth({register:true})" ng-hide="registration">Registrar</a>
           <a ui-sref="auth({register:null})" ng-show="registration">Entrar</a>

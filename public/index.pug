@@ -1,0 +1,16 @@
+doctype html
+html
+  head
+    title Terapia da Mão
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    link(href='https://fonts.googleapis.com/css?family=Space+Mono:400,400i,700,700i', rel='stylesheet')
+    | !{bundle.vendor.styles}
+    link(href='/styles/main.css', rel='stylesheet')
+    link(href='/styles/player.css', rel='stylesheet')
+  body(style='display:none;')
+    div(ui-view='', autoscroll='')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/swfobject/2.2/swfobject.min.js')
+    | !{bundle.vendor.scripts}
+    script.
+      moment.locale('pt-BR');
+    | !{bundle.main.scripts}

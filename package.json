@@ -23,6 +23,7 @@
   "scripts": {
     "test": "npm run eslint && npm run mocha",
     "eslint": "eslint src/. test/. --config .eslintrc.json",
+    "build": "gulp bundle",
     "start": "node src/",
     "mocha": "mocha test/ --recursive"
   },
@@ -48,9 +49,21 @@
     "pg": "^6.1.5",
     "sequelize": "^3.30.4",
     "serve-favicon": "^2.4.2",
-    "winston": "^2.3.1"
+    "winston": "^2.3.1",
+    "angular": "^1.6.1",
+    "angular-ui-router": "^1.0.0",
+    "feathers-client": "^2.2.0",
+    "ng-feathers": "^1.7.2",
+    "skeleton-css": "^2.0.4",
+    "underscore": "^1.8.3",
+    "vjs-video": "^0.1.6",
+    "font-awesome": "^4.7.0",
+    "moment": "^2.18.1",
+    "pug": "^2.0.0-rc2"
   },
   "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-bundle-assets": "^2.28.0",
     "eslint": "^3.19.0",
     "mocha": "^3.3.0",
     "react-scripts": "^0.9.5",

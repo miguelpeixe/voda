@@ -11,7 +11,7 @@ module.exports = function () {
   const app = this;
 
   app.use('/styles', expressLess( 'public/styles', {compress: true}));
-  app.use('/assets', serveStatic( 'bower_components', {maxAge: 31536000} ));
+  app.use('/fonts', serveStatic( 'public/static/fonts' ));
   app.use('/app', appInfo(app));
 
   app.use(notFound());

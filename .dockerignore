@@ -112,3 +112,5 @@ $RECYCLE.BIN/
 lib/
 data/
 nginx/
+public/static/
+bundle.result.json
