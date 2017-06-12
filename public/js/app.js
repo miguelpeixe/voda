@@ -1,7 +1,8 @@
 angular.module('voda', [
   'ui.router',
   'ngFeathers',
-  'vjs.video'
+  'vjs.video',
+  'angular-loading-bar'
 ]);
 
 angular.element(document).ready(function() {

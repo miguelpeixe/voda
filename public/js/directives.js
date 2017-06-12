@@ -87,7 +87,7 @@ angular.module('voda')
       templateUrl: '/views/video/player.html',
       link: function(scope, element, attrs) {
         scope.options = {
-          techOrder: ["flash", "html5"]
+          'techorder': ['flash']
         };
         scope.media = {};
         scope.$watch('video', function(video) {

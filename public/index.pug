@@ -13,4 +13,5 @@ html
     | !{bundle.vendor.scripts}
     script.
       moment.locale('pt-BR');
+      videojs.options.flash.swf = "/static/video-js.swf";
     | !{bundle.main.scripts}
