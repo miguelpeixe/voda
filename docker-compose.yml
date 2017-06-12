@@ -28,5 +28,4 @@ app:
     NODE_ENV: development
   volumes:
     - /src/node_modules
-    - /src/bower_components
     - .:/src
