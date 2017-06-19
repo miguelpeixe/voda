@@ -116,6 +116,22 @@ a {
   }
 }
 
+#loading-bar .bar {
+  background: darken(@main-color, 10%);
+}
+
+#loading-bar-spinner .spinner-icon {
+  border-top-color: darken(@main-color, 10%);
+  border-left-color: darken(@main-color, 10%);
+}
+
+#loading-bar .peg {
+  -moz-box-shadow: darken(@main-color, 10%) 1px 0 6px 1px;
+  -ms-box-shadow: darken(@main-color, 10%) 1px 0 6px 1px;
+  -webkit-box-shadow: darken(@main-color, 10%) 1px 0 6px 1px;
+  box-shadow: darken(@main-color, 10%) 1px 0 6px 1px;
+}
+
 .video-nav {
   form {
     a {
